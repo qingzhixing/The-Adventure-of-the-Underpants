@@ -6,7 +6,12 @@
 	],
 	"settings": {
 		"files.associations": {
-			"ostream": "cpp"
+			"ostream": "cpp",
+			"format": "cpp",
+			"xutility": "cpp",
+			"xstring": "cpp",
+			"iomanip": "cpp",
+			"string_view": "cpp"
 		}
 	}
 }

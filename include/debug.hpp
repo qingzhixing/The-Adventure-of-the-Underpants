@@ -10,7 +10,7 @@
    if(CONDITION){}        \
    else{ \
 		printf("Condition false: %s\n",(#CONDITION)); \
-		Halt();\
+		HALT();\
 	}
 #else
 #define DEBUG(CodeSegment) ((void)0)
@@ -19,3 +19,4 @@
 #endif
 
 #define HALT(CodeSegment)	while(true){CodeSegment;}
+#define DELETE_ME "DELETE ME! "

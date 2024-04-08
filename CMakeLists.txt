@@ -7,10 +7,12 @@ project (underpants)
 #     ./source/main.cpp
 #     )
 aux_source_directory(./source/ SRC_LIST)
+aux_source_directory(./lib/source/ SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 # 添加头文件目录
 target_include_directories(${PROJECT_NAME} PRIVATE ./include)
+target_include_directories(${PROJECT_NAME} PRIVATE ./lib/include)
 
 # # 批量添加源文件
 # file(GLOB SRCS CONFIGURE_DEPENDS ./src/*.cpp)

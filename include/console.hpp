@@ -16,12 +16,24 @@ public:
 
 public:
     void slow_print(const char *msg, DWORD sleep_ms);
+    void slow_print(const wchar_t *msg, DWORD sleep_ms);
     void clear_screen();
 
     void hide_console_cursor(HANDLE handle);
+    /* 
+        @x: horizontal pos
+        @y: vertical pos
+    */
+    void set_console_cur_pos(SHORT x, SHORT y);
+    void update_console_size();
 
 private:
     HANDLE std_output;
+    /*
+        @X: horizontal
+        @Y: vertical
+    */
+    COORD console_size;
 };
 
 #endif // !_CONSOLE_HPP_

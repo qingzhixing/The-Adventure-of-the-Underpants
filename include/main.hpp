@@ -3,6 +3,6 @@
 #define _MAIN_HPP_
 
 #include "console.hpp"
-#include "debug.h"
+#include "debug.hpp"
 
 #endif // !_MAIN_HPP_

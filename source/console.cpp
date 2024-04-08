@@ -1,9 +1,15 @@
 #include "console.hpp"
+#include "debug.hpp"
 
 Console::Console()
 {
 	std_output = GetStdHandle(STD_OUTPUT_HANDLE);
 	hide_console_cursor(std_output);
+	/*
+		UNICODE: 65001
+		GBK: 936
+	*/
+	SetConsoleOutputCP(936);
 }
 
 void Console::slow_print(const char *msg, DWORD sleep_ms)
@@ -12,6 +18,16 @@ void Console::slow_print(const char *msg, DWORD sleep_ms)
 	while (*pointer)
 	{
 		putchar(*pointer++);
+		Sleep(sleep_ms);
+	}
+}
+
+void Console::slow_print(const wchar_t *msg, DWORD sleep_ms)
+{
+	const wchar_t *pointer = msg;
+	while (*pointer)
+	{
+		putwchar(*pointer++);
 		Sleep(sleep_ms);
 	}
 }
@@ -67,4 +83,28 @@ void Console::hide_console_cursor(HANDLE handle)
 	new_cursor_info.bVisible = 0;
 	new_cursor_info.dwSize = 1;
 	SetConsoleCursorInfo(handle, &new_cursor_info);
+}
+
+void Console::set_console_cur_pos(SHORT x, SHORT y)
+{
+	update_console_size();
+
+	if (x > console_size.X || y > console_size.Y)
+		return;
+	COORD new_pos({x, y});
+	SetConsoleCursorPosition(std_output, new_pos);
+}
+
+void Console::update_console_size()
+{
+	CONSOLE_SCREEN_BUFFER_INFO console_info;
+	GetConsoleScreenBufferInfo(std_output, &console_info);
+	SMALL_RECT sr_window = console_info.srWindow;
+
+	SHORT new_row, new_column;
+	new_row = sr_window.Right - sr_window.Left + 1;
+	new_column = sr_window.Bottom - sr_window.Top + 1;
+
+	console_size.X = new_row;
+	console_size.Y = new_column;
 }
