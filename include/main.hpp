@@ -4,5 +4,6 @@
 
 #include "console.hpp"
 #include "debug.hpp"
+#include "types.hpp"
 
 #endif // !_MAIN_HPP_

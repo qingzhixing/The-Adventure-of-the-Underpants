@@ -1,14 +1,27 @@
 #include "main.hpp"
-Console console;
+
+extern Console console;
+
+static void init()
+{
+    std::wcout.imbue(std::locale("chs"));
+}
 
 int main(int argc, const char **argv)
 {
-    std::wcout.imbue(std::locale("chs"));
-    console.set_console_cur_pos(5, 10);
-    console.slow_print("underpants!", MID_SPEED);
-    console.set_console_cur_pos(5, 11);
-    console.slow_print("I used wanna use Chinese but failed, anyway.", HIGH_SPEED);
-    getchar();
-    Sleep(3000);
+    init();
+
+    /*
+        @brief: loading into game
+    */
+    console.slow_print("underpants!", MID_SPEED, 5, 10);
+    console.slow_print("I used wanna use Chinese but failed, anyway.", HIGH_SPEED, 5, 11);
+    Sleep(1.5_s);
+    console.clear_screen();
+
+    /*
+        @brief: Introduction
+    */
+    console.slow_print("Welcome to Underpants' World!", LOW_SPEED, 30, 10);
     return 0;
 }

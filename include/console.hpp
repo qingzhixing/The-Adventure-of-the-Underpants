@@ -15,24 +15,28 @@ public:
     Console();
 
 public:
-    void slow_print(const char *msg, DWORD sleep_ms);
+    /*
+        @brief: slow_print at Cursor on (x,y)
+    */
+    void slow_print(const char *msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
+
     void clear_screen();
 
     void hide_console_cursor(HANDLE handle);
+
     /*
         @x: horizontal pos
         @y: vertical pos
     */
     void set_console_cur_pos(SHORT x, SHORT y);
-    void update_console_size();
+    void set_console_cur_pos(COORD pos);
+
+    COORD get_console_size();
+
+    COORD get_console_cur_pos();
 
 private:
     HANDLE std_output;
-    /*
-        @X: horizontal
-        @Y: vertical
-    */
-    COORD console_size;
 };
 
 #endif // !_CONSOLE_HPP_
