@@ -22,16 +22,6 @@ void Console::slow_print(const char *msg, DWORD sleep_ms)
 	}
 }
 
-void Console::slow_print(const wchar_t *msg, DWORD sleep_ms)
-{
-	const wchar_t *pointer = msg;
-	while (*pointer)
-	{
-		putwchar(*pointer++);
-		Sleep(sleep_ms);
-	}
-}
-
 void Console::clear_screen()
 {
 	COORD coord_screen = {0, 0}; // home for the cursor

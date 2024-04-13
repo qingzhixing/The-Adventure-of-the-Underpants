@@ -16,11 +16,10 @@ public:
 
 public:
     void slow_print(const char *msg, DWORD sleep_ms);
-    void slow_print(const wchar_t *msg, DWORD sleep_ms);
     void clear_screen();
 
     void hide_console_cursor(HANDLE handle);
-    /* 
+    /*
         @x: horizontal pos
         @y: vertical pos
     */
