@@ -22,6 +22,11 @@ int main(int argc, const char **argv)
     /**
         @brief: Introduction
     */
-    console.slow_print("Welcome to Underpants' World!", LOW_SPEED, 30, 10);
+    console.slow_print("Welcome to Underpants' World!", LOW_SPEED, 30, 8);
+    console.slow_print("You are an UNDERPANTS, the resident of this world.", MID_SPEED, 25, 10);
+    console.slow_print("You are selected to gain the EVOLUTION.", MID_SPEED, 30, 12);
+    console.slow_print("Now! Start your adventure!", HIGH_SPEED, 30, 15);
+
+    getchar();
     return 0;
 }

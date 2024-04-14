@@ -6,7 +6,7 @@ Console console;
 Console::Console()
 {
 	std_output = GetStdHandle(STD_OUTPUT_HANDLE);
-	hide_console_cursor(std_output);
+	// hide_console_cursor(std_output);
 	/*
 		UNICODE: 65001
 		GBK: 936
