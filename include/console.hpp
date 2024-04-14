@@ -15,7 +15,7 @@ public:
     Console();
 
 public:
-    /*
+    /**
         @brief: slow_print at Cursor on (x,y)
     */
     void slow_print(const char *msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
@@ -24,9 +24,9 @@ public:
 
     void hide_console_cursor(HANDLE handle);
 
-    /*
-        @x: horizontal pos
-        @y: vertical pos
+    /**
+        @param x - horizontal pos
+        @param y - vertical pos
     */
     void set_console_cur_pos(SHORT x, SHORT y);
     void set_console_cur_pos(COORD pos);

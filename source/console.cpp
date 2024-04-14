@@ -81,6 +81,10 @@ void Console::hide_console_cursor(HANDLE handle)
 	SetConsoleCursorInfo(handle, &new_cursor_info);
 }
 
+/**
+	@param x - horizontal
+	@param y - vertical
+*/
 void Console::set_console_cur_pos(SHORT x, SHORT y)
 {
 	COORD console_size = get_console_size();
@@ -96,10 +100,6 @@ void Console::set_console_cur_pos(COORD pos)
 	set_console_cur_pos(pos.X, pos.Y);
 }
 
-/*
-	@X: horizontal
-	@Y: vertical
-*/
 COORD Console::get_console_size()
 {
 	COORD size;
