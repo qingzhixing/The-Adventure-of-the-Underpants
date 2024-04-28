@@ -125,3 +125,8 @@ COORD Console::get_console_cur_pos()
 
 	return info.dwCursorPosition;
 }
+
+void Console::set_console_text_attr(WORD wAttributes)
+{
+	SetConsoleTextAttribute(std_output, wAttributes);
+}

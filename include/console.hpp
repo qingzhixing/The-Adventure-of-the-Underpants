@@ -31,12 +31,23 @@ public:
     void set_console_cur_pos(SHORT x, SHORT y);
     void set_console_cur_pos(COORD pos);
 
+    void set_console_text_attr(WORD wAttributes);
+
     COORD get_console_size();
 
     COORD get_console_cur_pos();
 
 private:
     HANDLE std_output;
+};
+
+enum TextColorPreset
+{
+    BLUE = FOREGROUND_BLUE,
+    GREEN = FOREGROUND_GREEN,
+    RED = FOREGROUND_RED,
+    PURPLE = FOREGROUND_RED | FOREGROUND_BLUE,
+
 };
 
 #endif // !_CONSOLE_HPP_

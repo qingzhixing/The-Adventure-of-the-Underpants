@@ -1,28 +1,38 @@
 {
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "C/C++: clang.exe 生成活动文件",
-            "command": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+            "label": "C/C++: g++.exe build active file", // 任务的名字叫Build，注意是大小写区分的，等会在launch中调用这个名字
+            "type": "shell", // 任务执行的是shell命令，也可以是
+            "command": "g++", // 命令是g++
             "args": [
-                "-fcolor-diagnostics",
-                "-fansi-escape-codes",
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "'-Wall'",
+                "'-std=c++17'", //使用c++17标准编译
+                "'${file}'", //当前文件名
+                "-o", //对象名，不进行编译优化
+                "'${fileBasenameNoExtension}.exe'", //当前文件名（去掉扩展名）
             ],
-            "options": {
-                "cwd": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\Llvm\\x64\\bin"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            // 所以以上部分，就是在shell中执行（假设文件名为filename.cpp）
+            // g++ filename.cpp -o filename.exe
             "group": {
                 "kind": "build",
                 "isDefault": true
+                // 任务分组，因为是tasks而不是task，意味着可以连着执行很多任务
+                // 在build组的任务们，可以通过在Command Palette(F1) 输入run build task来运行
+                // 当然，如果任务分组是test，你就可以用run test task来运行 
             },
-            "detail": "调试器生成的任务。"
+            "problemMatcher": [
+                "$gcc" // 使用gcc捕获错误
+            ],
+        },
+        {
+            "label": "Remove Executable Files",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "'${fileBasenameNoExtension}.exe'",
+                "-Force"
+            ],
+            "group": "none",
         }
     ],
     "version": "2.0.0"
