@@ -1,5 +1,6 @@
 #include "console.hpp"
 #include "debug.hpp"
+#include <string>
 
 Console console;
 
@@ -28,6 +29,12 @@ void Console::slow_print(const char *msg, DWORD sleep_ms, SHORT x, SHORT y)
 
 	set_console_cur_pos(old_pos);
 }
+
+void Console::slow_print(const std::string &msg, DWORD sleep_ms, SHORT x, SHORT y)
+{
+	slow_print(msg.c_str(), sleep_ms, x, y);
+}
+
 void Console::clear_screen()
 {
 	COORD coord_screen = {0, 0}; // home for the cursor

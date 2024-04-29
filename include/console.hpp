@@ -19,6 +19,7 @@ public:
         @brief: slow_print at Cursor on (x,y)
     */
     void slow_print(const char *msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
+    void slow_print(const std::string &msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
 
     void clear_screen();
 
@@ -43,11 +44,25 @@ private:
 
 enum TextColorPreset
 {
+    INTENSITY = FOREGROUND_INTENSITY, // 增强
+    BLACK = 0,
     BLUE = FOREGROUND_BLUE,
     GREEN = FOREGROUND_GREEN,
+    CYAN = BLUE | GREEN, // 青色
     RED = FOREGROUND_RED,
-    PURPLE = FOREGROUND_RED | FOREGROUND_BLUE,
-
+    MAGENTA = RED | BLUE, // 洋红,粉紫色
+    YELLOW = RED | GREEN,
+    WHITE = RED | BLUE | GREEN,
+    GREY = BLACK | INTENSITY,
+    INTENSITY_BLACK = INTENSITY | BLACK,
+    INTENSITY_BLUE = INTENSITY | BLUE,
+    INTENSITY_GREEN = INTENSITY | GREEN,
+    INTENSITY_CYAN = INTENSITY | CYAN,
+    INTENSITY_RED = INTENSITY | RED,
+    INTENSITY_MAGENTA = INTENSITY | MAGENTA,
+    INTENSITY_YELLOW = INTENSITY | YELLOW,
+    INTENSITY_WHITE = INTENSITY | WHITE,
+    DEFAULT = WHITE,
 };
 
 #endif // !_CONSOLE_HPP_

@@ -5,5 +5,6 @@
 #include "console.hpp"
 #include "debug.hpp"
 #include "types.hpp"
+#include "player.hpp"
 
 #endif // !_MAIN_HPP_

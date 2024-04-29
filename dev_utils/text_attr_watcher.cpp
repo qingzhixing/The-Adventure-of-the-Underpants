@@ -15,6 +15,5 @@ int main()
         SetConsoleTextAttribute(std_output, basic_text_attr);
         puts("");
     }
-    getchar();
     return 0;
 }
