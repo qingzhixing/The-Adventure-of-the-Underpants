@@ -6,5 +6,6 @@
 #include "debug.hpp"
 #include "types.hpp"
 #include "player.hpp"
+#include "global_data_manager.hpp"
 
 #endif // !_MAIN_HPP_

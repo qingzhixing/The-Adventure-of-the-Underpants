@@ -1,9 +1,12 @@
 #include "main.hpp"
 
+extern GlobalDataManager global;
+
 extern Console console;
 
 static void init()
 {
+    global.save_player_data();
 }
 
 int main(int argc, const char **argv)
