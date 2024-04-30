@@ -6,7 +6,6 @@
 #include <iostream>
 using std::string;
 
-// 玩家类
 class Player
 {
 public:

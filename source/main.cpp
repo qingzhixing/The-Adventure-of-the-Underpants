@@ -4,7 +4,6 @@ extern Console console;
 
 static void init()
 {
-    std::wcout.imbue(std::locale("chs"));
 }
 
 int main(int argc, const char **argv)

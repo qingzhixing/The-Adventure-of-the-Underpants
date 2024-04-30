@@ -12,7 +12,7 @@ Console::Console()
 		UNICODE: 65001
 		GBK: 936
 	*/
-	SetConsoleOutputCP(936);
+	// SetConsoleOutputCP(936);
 }
 
 void Console::slow_print(const char *msg, DWORD sleep_ms, SHORT x, SHORT y)
