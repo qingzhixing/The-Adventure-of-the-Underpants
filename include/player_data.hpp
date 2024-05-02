@@ -4,12 +4,16 @@
 
 #include <string>
 #include <iostream>
+#include "exportable_data.hpp"
+#include "../lib/include/rapidjson/document.h"
+
+using rapidjson::Value;
 using std::string;
 
-class Player
+class PlayerData : IExportableData
 {
 public:
-    Player(string _name)
+    PlayerData(string _name)
     {
         name = _name;
         level = 1;
@@ -23,7 +27,7 @@ public:
         attack = 10;
         defense = 10;
     }
-    Player()
+    PlayerData()
     {
         name = "no-named";
         level = 1;
@@ -37,6 +41,8 @@ public:
         attack = 10;
         defense = 10;
     }
+
+    Value export_data();
 
     void add_experience(int exp)
     {

@@ -2,7 +2,7 @@
 #ifndef __GLOBAL_DATA_MANAGER_HPP_
 #define __GLOBAL_DATA_MANAGER_HPP_
 
-#include "player.hpp"
+#include "player_data.hpp"
 
 class GlobalDataManager
 {
@@ -12,7 +12,7 @@ public:
     static const char *get_exe_dir();
 
 public:
-    Player player_data;
+    PlayerData player_data;
 };
 
 extern GlobalDataManager global;

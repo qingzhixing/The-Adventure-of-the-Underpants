@@ -34,7 +34,7 @@ int main(int argc, const char **argv)
     /**
      * @brief Get Player Data
      */
-    Player player;
+    PlayerData player;
     console.slow_print("Please enter your name: ", HIGH_SPEED, 30, 8);
     console.set_console_text_attr(TextColorPreset::INTENSITY_YELLOW);
     // read a line of name

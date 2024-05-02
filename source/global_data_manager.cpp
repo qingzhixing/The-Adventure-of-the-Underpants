@@ -29,9 +29,12 @@ void GlobalDataManager::save_player_data()
     Document doc;
 
     Value value(kObjectType);
-    value.AddMember("Author", "qingzhixing sama!", doc.GetAllocator());
+    value.AddMember("author", "qingzhixing sama!", doc.GetAllocator());
 
-        FILE *file = fopen("test.json", "w");
+    doc.SetObject();
+    doc.AddMember("game_info", value, doc.GetAllocator());
+
+    FILE *file = fopen("game_data.json", "w");
 
     char writeBuffer[65536];
     FileWriteStream os(file, writeBuffer, sizeof(writeBuffer));
