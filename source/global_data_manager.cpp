@@ -11,6 +11,10 @@ using namespace rapidjson;
 
 GlobalDataManager global;
 
+const string GlobalDataManager::AUTHOR = "qingzhixing sama!";
+
+const string GlobalDataManager::VERSION = "0.0.1 - preview";
+
 void GlobalDataManager::load_player_data()
 {
     printf("Unimplemented: load_player_data\n");
@@ -27,12 +31,22 @@ void GlobalDataManager::save_player_data()
 {
     printf("Unimplemented: save_player_data\n");
     Document doc;
-
-    Value value(kObjectType);
-    value.AddMember("author", "qingzhixing sama!", doc.GetAllocator());
-
     doc.SetObject();
-    doc.AddMember("game_info", value, doc.GetAllocator());
+
+    /*
+        game_info
+    */
+    Value game_info(kObjectType);
+    game_info.AddMember("author", AUTHOR, doc.GetAllocator());
+    game_info.AddMember("version", VERSION, doc.GetAllocator());
+    doc.AddMember("game_info", game_info, doc.GetAllocator());
+
+    /*
+        game_data
+    */
+    // TODO:
+    // Value game_data(kObjectType);
+    // game_data.AddMember("player_data")
 
     FILE *file = fopen("game_data.json", "w");
 

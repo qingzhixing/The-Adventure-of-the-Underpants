@@ -3,6 +3,7 @@
 #define __GLOBAL_DATA_MANAGER_HPP_
 
 #include "player_data.hpp"
+#include <vector>
 
 class GlobalDataManager
 {
@@ -12,7 +13,15 @@ public:
     static const char *get_exe_dir();
 
 public:
-    PlayerData player_data;
+    typedef std::vector<ExportableData> ExportableDataArray;
+    ExportableDataArray data_array;
+
+public:
+    /*
+        game_info:
+    */
+    const static string AUTHOR;
+    const static string VERSION;
 };
 
 extern GlobalDataManager global;

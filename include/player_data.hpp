@@ -7,141 +7,43 @@
 #include "exportable_data.hpp"
 #include "../lib/include/rapidjson/document.h"
 
-using rapidjson::Value;
 using std::string;
 
-class PlayerData : IExportableData
+class PlayerData : public ExportableData
 {
 public:
-    PlayerData(string _name)
-    {
-        name = _name;
-        level = 1;
-        experience = 0;
-        blood = 100;
-        max_blood = 100;
-        magic = 100;
-        max_magic = 100;
-        cleanliness = 100;
-        max_cleanliness = 100;
-        attack = 10;
-        defense = 10;
-    }
-    PlayerData()
-    {
-        name = "no-named";
-        level = 1;
-        experience = 0;
-        blood = 100;
-        max_blood = 100;
-        magic = 100;
-        max_magic = 100;
-        cleanliness = 100;
-        max_cleanliness = 100;
-        attack = 10;
-        defense = 10;
-    }
+    PlayerData(string _name);
+    PlayerData();
 
-    Value export_data();
+    rapidjson::Value export_data(rapidjson::CrtAllocator &allocator) const override;
 
-    void add_experience(int exp)
-    {
-        experience += exp;
-        upgrade();
-    }
+    void add_experience(int exp);
 
-    void add_cleanliness(int value)
-    {
-        cleanliness += value;
-        if (cleanliness > max_cleanliness)
-            cleanliness = max_cleanliness;
-    }
+    void add_cleanliness(int value);
 
-    void add_blood(int value)
-    {
-        blood += value;
-        if (blood > max_blood)
-            blood = max_blood;
-    }
+    void add_blood(int value);
 
-    void add_magic(int value)
-    {
-        magic += value;
-        if (magic > max_magic)
-            magic = max_magic;
-    }
+    void add_magic(int value);
 
-    void add_attack(int value)
-    {
-        attack += value;
-    }
+    void add_attack(int value);
 
-    void add_defense(int value)
-    {
-        defense += value;
-    }
+    void add_defense(int value);
 
-    void lose_blood(int blood_off)
-    {
-        blood -= blood_off;
-        if (blood < 0)
-            blood = 0;
-    }
+    void lose_blood(int blood_off);
 
-    void lose_magic(int magic_off)
-    {
-        magic -= magic_off;
-        if (magic < 0)
-            magic = 0;
-    }
+    void lose_magic(int magic_off);
 
-    void lose_cleanliness(int cleanliness_off)
-    {
-        cleanliness -= cleanliness_off;
-        if (cleanliness < 0)
-            cleanliness = 0;
-    }
+    void lose_cleanliness(int cleanliness_off);
 
-    bool is_dead() const
-    {
-        return blood == 0;
-    }
+    bool is_dead() const;
 
-    void upgrade()
-    {
-        if (experience >= upgrade_experience())
-        {
-            level++;
-            cleanliness = max_cleanliness;
-            blood = max_blood;
-            magic = max_magic;
-            experience -= upgrade_experience();
-            attack += 5;
-            defense += 5;
-        }
-    }
+    void upgrade();
 
-    inline int upgrade_experience() const
-    {
-        return level * 100;
-    }
+    inline int upgrade_experience() const;
 
-    int experience_to_upgrade() const
-    {
-        return experience - upgrade_experience();
-    }
+    inline int experience_to_upgrade() const;
 
-    void print_player_data()
-    {
-        std::cout << "Name: " << name << std::endl;
-        std::cout << "Level: " << level << std::endl;
-        std::cout << "Experience: " << experience << std::endl;
-        std::cout << "Blood: " << blood << "/" << max_blood << std::endl;
-        std::cout << "Magic: " << magic << "/" << max_magic << std::endl;
-        std::cout << "Cleanliness: " << cleanliness << "/" << max_cleanliness << std::endl;
-        std::cout << "Attack: " << attack << std::endl;
-        std::cout << "Defense: " << defense << std::endl;
-    }
+    void print_player_data();
 
 public:
     string name;

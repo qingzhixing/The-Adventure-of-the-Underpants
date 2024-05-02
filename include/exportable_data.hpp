@@ -4,11 +4,10 @@
 
 #include "../lib/include/rapidjson/document.h"
 
-using rapidjson::Value;
-
-__interface IExportableData
+class ExportableData
 {
-    virtual Value export_data() = 0;
+public:
+    virtual rapidjson::Value export_data(rapidjson::CrtAllocator &allocator) const = 0;
 };
 
 #endif // !__EXPORTABLE_DATA_HPP_
