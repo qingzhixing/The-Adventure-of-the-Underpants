@@ -38,7 +38,7 @@
             "program": "${workspaceFolder}/build/Debug/underpants.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}/build/Debug/",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
