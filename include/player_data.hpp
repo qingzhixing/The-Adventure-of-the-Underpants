@@ -15,7 +15,7 @@ public:
     PlayerData(string _name);
     PlayerData();
 
-    rapidjson::Value export_data(rapidjson::CrtAllocator &allocator) const override;
+    rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
 
     void add_experience(int exp);
 

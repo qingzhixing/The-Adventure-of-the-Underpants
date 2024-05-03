@@ -4,6 +4,7 @@
 
 #include "player_data.hpp"
 #include <vector>
+#include <rapidjson/document.h>
 
 class GlobalDataManager
 {
@@ -12,9 +13,15 @@ public:
     void save_player_data();
     static const char *get_exe_dir();
 
+private:
+    void add_game_info(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
+    void add_game_data(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
+
 public:
-    typedef std::vector<ExportableData> ExportableDataArray;
-    ExportableDataArray data_array;
+    /*
+        game_data
+    */
+    PlayerData player_data;
 
 public:
     /*

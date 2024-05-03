@@ -2,6 +2,8 @@
 
 using namespace rapidjson;
 
+string PlayerData::data_name = "player_data";
+
 PlayerData::PlayerData(string _name)
 {
     name = _name;
@@ -19,10 +21,20 @@ PlayerData::PlayerData(string _name)
 
 PlayerData::PlayerData() : PlayerData("no-named") {}
 
-Value PlayerData::export_data(rapidjson::CrtAllocator &allocator) const
+Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const
 {
-    Value data(kArrayType);
-    Value name_value(kStringType);
+    Value data(kObjectType);
+    data.AddMember("name", Value().SetString(name.c_str(), name.length(), allocator), allocator);
+    data.AddMember("level", level, allocator);
+    data.AddMember("experience", experience, allocator);
+    data.AddMember("blood", blood, allocator);
+    data.AddMember("max_blood", max_blood, allocator);
+    data.AddMember("magic", magic, allocator);
+    data.AddMember("max_magic", max_magic, allocator);
+    data.AddMember("cleanliness", cleanliness, allocator);
+    data.AddMember("max_cleanliness", max_cleanliness, allocator);
+    data.AddMember("attack", attack, allocator);
+    data.AddMember("defense", defense, allocator);
     return data;
 }
 
