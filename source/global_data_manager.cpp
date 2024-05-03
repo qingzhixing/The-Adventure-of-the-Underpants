@@ -31,22 +31,21 @@ void GlobalDataManager::save_player_data()
 {
     printf("Unimplemented: save_player_data\n");
     Document doc;
+    rapidjson::Document::AllocatorType &allocator = doc.GetAllocator();
     doc.SetObject();
 
     /*
         game_info
     */
     Value game_info(kObjectType);
-    game_info.AddMember("author", AUTHOR, doc.GetAllocator());
-    game_info.AddMember("version", VERSION, doc.GetAllocator());
-    doc.AddMember("game_info", game_info, doc.GetAllocator());
+    game_info.AddMember("author", Value().SetString(AUTHOR.c_str(), AUTHOR.length(), allocator), allocator);
+    game_info.AddMember("version", Value().SetString(VERSION.c_str(), VERSION.length(), allocator), allocator);
+    doc.AddMember("game_info", game_info, allocator);
 
     /*
         game_data
     */
-    // TODO:
-    // Value game_data(kObjectType);
-    // game_data.AddMember("player_data")
+    Value game_data(kObjectType);
 
     FILE *file = fopen("game_data.json", "w");
 
