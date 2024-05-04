@@ -15,10 +15,7 @@ const string GlobalDataManager::AUTHOR = "qingzhixing sama!";
 
 const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
-void GlobalDataManager::load_player_data()
-{
-    printf("Unimplemented: load_player_data\n");
-}
+const char *GlobalDataManager::DATA_FILE = "game_data.json";
 
 const char *GlobalDataManager::get_exe_dir()
 {
@@ -27,6 +24,61 @@ const char *GlobalDataManager::get_exe_dir()
     return path;
 }
 
+#pragma region import_data
+
+void GlobalDataManager::parse_game_data(rapidjson::Value &value)
+{
+    const char *player_data_name = player_data.data_name.c_str();
+    if (value.HasMember(player_data_name))
+    {
+        player_data.import_data(value[player_data_name]);
+    }
+
+    const char *game_setting_name = game_setting.data_name.c_str();
+    if (value.HasMember(game_setting_name))
+    {
+        player_data.import_data(value[game_setting_name]);
+    }
+}
+
+void GlobalDataManager::load_game_data()
+{
+    printf("Unimplemented: load_game_data\n");
+    /*
+        read file
+    */
+    FILE *file;
+    errno_t err = fopen_s(&file, DATA_FILE, "r");
+    if (err != 0)
+    {
+        printf("fopen_s error: %d\n", err);
+        fclose(file);
+        return;
+    }
+    if (file == nullptr)
+    {
+        printf("Missing file: %s\n", DATA_FILE);
+        fclose(file);
+        return;
+    }
+
+    std::ifstream stream(file);
+
+    Document doc;
+    doc.ParseStream(stream);
+
+    if (doc.HasMember("game_data"))
+    {
+        parse_game_data(doc["game_data"]);
+    }
+
+    stream.close();
+    fclose(file);
+}
+
+#pragma endregion
+
+#pragma region save_data
 void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::AllocatorType &allocator)
 {
     Value game_info(kObjectType);
@@ -38,15 +90,15 @@ void GlobalDataManager::add_game_data(Document &doc, rapidjson::Document::Alloca
 {
 
     Value game_data(kObjectType);
-    auto player_data_value = player_data.export_data(allocator);
-    Value player_data_name;
-    player_data_name.SetString(player_data.data_name.c_str(), player_data.data_name.length(), allocator);
 
-    game_data.AddMember(player_data_name, player_data_value, allocator);
+    game_data.AddMember(player_data.get_data_name_value(allocator), player_data.export_data(allocator), allocator);
+
+    game_data.AddMember(game_setting.get_data_name_value(allocator), game_setting.export_data(allocator), allocator);
+
     doc.AddMember("game_data", game_data, allocator);
 }
 
-void GlobalDataManager::save_player_data()
+void GlobalDataManager::save_game_data()
 {
     Document doc;
     rapidjson::Document::AllocatorType &allocator = doc.GetAllocator();
@@ -65,18 +117,24 @@ void GlobalDataManager::save_player_data()
     add_game_data(doc, allocator);
 
     FILE *file;
-    errno_t err = fopen_s(&file, "game_data.json", "w");
+    errno_t err = fopen_s(&file, DATA_FILE, "w");
     if (err != 0)
     {
         printf("fopen_s error: %d\n", err);
+        fclose(file);
         return;
     }
 
     char writeBuffer[65536];
     FileWriteStream os(file, writeBuffer, sizeof(writeBuffer));
 
-    PrettyWriter<FileWriteStream> writer(os); // 注意，可以不使用PrettyWriter，不过，写出来的结构不好看，Pretty会将json写成树结构
+    /*
+        注意，可以不使用PrettyWriter，不过，写出来的结构不好看，Pretty会将json写成树结构
+    */
+    PrettyWriter<FileWriteStream> writer(os);
     doc.Accept(writer);
 
     fclose(file);
 }
+
+#pragma endregion

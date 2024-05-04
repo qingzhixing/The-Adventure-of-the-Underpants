@@ -12,11 +12,15 @@ using std::string;
 class PlayerData : public ExportableData
 {
 public:
-    PlayerData(string _name);
+    PlayerData(string player_name);
     PlayerData();
 
+public:
     rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
+    void import_data(const rapidjson::Value &object_data) override;
+    void print_data() const override;
 
+public:
     void add_experience(int exp);
 
     void add_cleanliness(int value);
@@ -42,8 +46,6 @@ public:
     inline int upgrade_experience() const;
 
     inline int experience_to_upgrade() const;
-
-    void print_player_data();
 
 public:
     string name;

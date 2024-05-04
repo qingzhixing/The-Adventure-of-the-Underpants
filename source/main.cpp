@@ -2,17 +2,19 @@
 
 extern GlobalDataManager global;
 
+static PlayerData &player = global.player_data;
+
+static GameSetting &setting = global.game_setting;
+
 extern Console console;
 
 static void init()
 {
-    global.save_player_data();
+    global.load_game_data();
 }
 
-int main(int argc, const char **argv)
+inline void first_enter()
 {
-    init();
-
     /**
         @brief: loading into game
     */
@@ -34,7 +36,6 @@ int main(int argc, const char **argv)
     /**
      * @brief Get Player Data
      */
-    PlayerData &player = global.player_data;
 
     console.slow_print("Please enter your name: ", HIGH_SPEED, 30, 8);
     console.set_console_text_attr(TextColorPreset::INTENSITY_YELLOW);
@@ -44,15 +45,46 @@ int main(int argc, const char **argv)
     console.set_console_text_attr(TextColorPreset::DEFAULT);
 
     // save data
-    global.save_player_data();
+    global.save_game_data();
 
     console.slow_print("Hello, " + player.name + "!\n", HIGH_SPEED, 30, 10);
-    player.print_player_data();
+    player.print_data();
     Sleep(1.5_s);
+}
+
+inline void not_first_enter()
+{
+
+    console.slow_print("underpants!", HIGH_SPEED, 5, 10);
+    Sleep(1.5_s);
+    console.clear_screen();
+
+    console.slow_print("Hello, " + player.name + "!\n", HIGH_SPEED, 30, 10);
+    console.slow_print("Welcome back to Underpants' World!", HIGH_SPEED, 30, 12);
+    console.slow_print("Now! Start your adventure!", HIGH_SPEED, 30, 16);
+    Sleep(1.5_s);
+    console.clear_screen();
+
+    Sleep(1.5_s);
+}
+
+int main(int argc, const char **argv)
+{
+    init();
+
+    if (setting.first_enter)
+    {
+        first_enter();
+        setting.first_enter = false;
+        global.save_game_data();
+    }
+    else
+    {
+        not_first_enter();
+    }
 
     while (true)
     {
-        Sleep(5000);
     }
     return 0;
 }

@@ -1,10 +1,9 @@
 #include "player_data.hpp"
+#include "debug.hpp"
 
 using namespace rapidjson;
 
-string PlayerData::data_name = "player_data";
-
-PlayerData::PlayerData(string _name)
+PlayerData::PlayerData(string _name) : ExportableData("player_data")
 {
     name = _name;
     level = 1;
@@ -23,19 +22,55 @@ PlayerData::PlayerData() : PlayerData("no-named") {}
 
 Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const
 {
+    DEBUG(printf("Exporting player data\n"));
+
     Value data(kObjectType);
-    data.AddMember("name", Value().SetString(name.c_str(), name.length(), allocator), allocator);
-    data.AddMember("level", level, allocator);
-    data.AddMember("experience", experience, allocator);
-    data.AddMember("blood", blood, allocator);
-    data.AddMember("max_blood", max_blood, allocator);
-    data.AddMember("magic", magic, allocator);
-    data.AddMember("max_magic", max_magic, allocator);
-    data.AddMember("cleanliness", cleanliness, allocator);
-    data.AddMember("max_cleanliness", max_cleanliness, allocator);
-    data.AddMember("attack", attack, allocator);
-    data.AddMember("defense", defense, allocator);
+    data.AddMember(MEMBER_2_STR(name), Value().SetString(name.c_str(), name.length(), allocator), allocator);
+    data.AddMember(MEMBER_2_STR(level), level, allocator);
+    data.AddMember(MEMBER_2_STR(experience), experience, allocator);
+    data.AddMember(MEMBER_2_STR(blood), blood, allocator);
+    data.AddMember(MEMBER_2_STR(max_blood), max_blood, allocator);
+    data.AddMember(MEMBER_2_STR(magic), magic, allocator);
+    data.AddMember(MEMBER_2_STR(max_magic), max_magic, allocator);
+    data.AddMember(MEMBER_2_STR(cleanliness), cleanliness, allocator);
+    data.AddMember(MEMBER_2_STR(max_cleanliness), max_cleanliness, allocator);
+    data.AddMember(MEMBER_2_STR(attack), attack, allocator);
+    data.AddMember(MEMBER_2_STR(defense), defense, allocator);
+
+    DEBUG(printf("Player data exported\n"));
+
     return data;
+}
+
+void PlayerData::print_data() const
+{
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Level: " << level << std::endl;
+    std::cout << "Experience: " << experience << std::endl;
+    std::cout << "Blood: " << blood << "/" << max_blood << std::endl;
+    std::cout << "Magic: " << magic << "/" << max_magic << std::endl;
+    std::cout << "Cleanliness: " << cleanliness << "/" << max_cleanliness << std::endl;
+    std::cout << "Attack: " << attack << std::endl;
+    std::cout << "Defense: " << defense << std::endl;
+}
+
+void PlayerData::import_data(const Value &object_data)
+{
+    DEBUG(printf("Importing player data\n"));
+
+    PARSE_STRING_VALUE(name);
+    PARSE_INT_VALUE(level);
+    PARSE_INT_VALUE(experience);
+    PARSE_INT_VALUE(blood);
+    PARSE_INT_VALUE(max_blood);
+    PARSE_INT_VALUE(magic);
+    PARSE_INT_VALUE(max_magic);
+    PARSE_INT_VALUE(cleanliness);
+    PARSE_INT_VALUE(max_cleanliness);
+    PARSE_INT_VALUE(attack);
+    PARSE_INT_VALUE(defense);
+
+    DEBUG(printf("Player data imported\n"));
 }
 
 void PlayerData::add_experience(int exp)
@@ -123,16 +158,4 @@ inline int PlayerData::upgrade_experience() const
 inline int PlayerData::experience_to_upgrade() const
 {
     return experience - upgrade_experience();
-}
-
-void PlayerData::print_player_data()
-{
-    std::cout << "Name: " << name << std::endl;
-    std::cout << "Level: " << level << std::endl;
-    std::cout << "Experience: " << experience << std::endl;
-    std::cout << "Blood: " << blood << "/" << max_blood << std::endl;
-    std::cout << "Magic: " << magic << "/" << max_magic << std::endl;
-    std::cout << "Cleanliness: " << cleanliness << "/" << max_cleanliness << std::endl;
-    std::cout << "Attack: " << attack << std::endl;
-    std::cout << "Defense: " << defense << std::endl;
 }
