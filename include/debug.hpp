@@ -41,4 +41,6 @@
    } while (true)
 #define DELETE_ME "DELETE ME! "
 
+#define CANCEL(CodeSegment) ((void)0)
+
 #endif // !_DEBUG_HPP_

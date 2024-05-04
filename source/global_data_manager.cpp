@@ -6,6 +6,8 @@
 #include <rapidjson/document.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/prettywriter.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/error/en.h>
 
 using namespace rapidjson;
 
@@ -43,7 +45,6 @@ void GlobalDataManager::parse_game_data(rapidjson::Value &value)
 
 void GlobalDataManager::load_game_data()
 {
-    printf("Unimplemented: load_game_data\n");
     /*
         read file
     */
@@ -57,22 +58,48 @@ void GlobalDataManager::load_game_data()
     }
     if (file == nullptr)
     {
-        printf("Missing file: %s\n", DATA_FILE);
+        printf("Missing file: %s, (file == nullptr)\n", DATA_FILE);
         fclose(file);
         return;
     }
 
+    /*
+        Parse.
+    */
+
     std::ifstream stream(file);
+    IStreamWrapper wrapper(stream);
+    stream.close();
+
+    DEBUG(printf(DELETE_ME "Prepared to parse json\n"));
 
     Document doc;
-    doc.ParseStream(stream);
+    doc.ParseStream(wrapper);
+
+    DEBUG(printf(DELETE_ME "Json Parsed\n"));
+
+    if (doc.HasParseError())
+    {
+        printf("Json Parse Error!\n");
+        fprintf(stdout, "\nError(offset %u): %s\n", (unsigned)doc.GetErrorOffset(), GetParseError_En(doc.GetParseError()));
+        HALT();
+        fclose(file);
+        return;
+    }
+
+    if (!doc.IsObject())
+    {
+        printf("Json is not an object!\n");
+        fclose(file);
+        return;
+    }
 
     if (doc.HasMember("game_data"))
     {
+        DEBUG(printf("game_data exist\n"));
         parse_game_data(doc["game_data"]);
     }
 
-    stream.close();
     fclose(file);
 }
 
@@ -86,6 +113,7 @@ void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::Alloca
     game_info.AddMember("version", Value().SetString(VERSION.c_str(), VERSION.length(), allocator), allocator);
     doc.AddMember("game_info", game_info, allocator);
 }
+
 void GlobalDataManager::add_game_data(Document &doc, rapidjson::Document::AllocatorType &allocator)
 {
 

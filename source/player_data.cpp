@@ -22,7 +22,7 @@ PlayerData::PlayerData() : PlayerData("no-named") {}
 
 Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const
 {
-    DEBUG(printf("Exporting player data\n"));
+    DEBUG(printf("Exporting player data.\n"));
 
     Value data(kObjectType);
     data.AddMember(MEMBER_2_STR(name), Value().SetString(name.c_str(), name.length(), allocator), allocator);
@@ -37,7 +37,7 @@ Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) con
     data.AddMember(MEMBER_2_STR(attack), attack, allocator);
     data.AddMember(MEMBER_2_STR(defense), defense, allocator);
 
-    DEBUG(printf("Player data exported\n"));
+    DEBUG(printf("Exporting player data done.\n"));
 
     return data;
 }
