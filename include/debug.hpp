@@ -1,50 +1,42 @@
 #pragma once
-#ifndef _DEBUG_HPP_
-#define _DEBUG_HPP_
+#ifndef DEBUG_HPP_
+#define DEBUG_HPP_
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 #ifndef NDEBUG
 #define DEBUG_ENABLED true
 #define DEBUG(CodeSegment) \
-	do                     \
-	{                      \
-		CodeSegment;       \
-	} while (0)
+    do {                   \
+        CodeSegment;       \
+    } while (0)
 #define JUDGE(CONDITION)                               \
-	if (CONDITION)                                     \
-	{                                                  \
-	}                                                  \
-	else                                               \
-	{                                                  \
-		printf("Condition false: %s\n", (#CONDITION)); \
-	}
+    if (CONDITION) {                                   \
+    } else {                                           \
+        printf("Condition false: %s\n", (#CONDITION)); \
+    }
 #define ASSERT(CONDITION)                              \
-	if (CONDITION)                                     \
-	{                                                  \
-	}                                                  \
-	else                                               \
-	{                                                  \
-		printf("Condition false: %s\n", (#CONDITION)); \
-		HALT();                                        \
-	}
+    if (CONDITION) {                                   \
+    } else {                                           \
+        printf("Condition false: %s\n", (#CONDITION)); \
+        HALT();                                        \
+    }
 #else
 #define DEBUG_ENABLED false
-#define DEBUG(CodeSegment) ((void)0)
-#define JUDGE(CONDITION) ((void)0)
-#define ASSERT(CONDITION) ((void)0)
+#define DEBUG(CodeSegment) ((void) 0)
+#define JUDGE(CONDITION) ((void) 0)
+#define ASSERT(CONDITION) ((void) 0)
 #endif
 
 #define HALT(CodeSegment) \
-	do                    \
-	{                     \
-		CodeSegment;      \
-	} while (true)
+    do {                  \
+        CodeSegment;      \
+    } while (true)
 #define DELETE_ME "DELETE ME! "
 
-#define CANCEL(CodeSegment) ((void)0)
+#define CANCEL(CodeSegment) ((void) 0)
 
 std::string get_file_content(const char *file);
 
-#endif // !_DEBUG_HPP_
+#endif// !DEBUG_HPP_

@@ -1,14 +1,13 @@
 #pragma once
-#ifndef __GAME_SETTING_HPP_
-#define __GAME_SETTING_HPP_
+#ifndef GAME_SETTING_HPP_
+#define GAME_SETTING_HPP_
 
-#include "exportable_data.hpp"
 #include "debug.hpp"
+#include "exportable_data.hpp"
 
 #define SKIP_LEADING true
 
-class GameSetting : public ExportableData
-{
+class GameSetting : public ExportableData {
 public:
     GameSetting();
 
@@ -23,4 +22,4 @@ public:
     bool skip_leading = SKIP_LEADING;
 };
 
-#endif // !__GAME_SETTING_HPP_
+#endif// !GAME_SETTING_HPP_

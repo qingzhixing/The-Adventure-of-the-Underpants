@@ -8,15 +8,14 @@ static GameSetting &setting = global.game_setting;
 
 extern Console console;
 
-static void init()
-{
+static void init() {
     global.load_game_data();
     player.print_data();
     setting.print_data();
+    HALT();
 }
 
-inline void first_enter()
-{
+inline void first_enter() {
     /**
         @brief: loading into game
     */
@@ -54,8 +53,7 @@ inline void first_enter()
     Sleep(1.5_s);
 }
 
-inline void not_first_enter()
-{
+inline void not_first_enter() {
 
     console.slow_print("underpants!", HIGH_SPEED, 5, 10);
     Sleep(1.5_s);
@@ -70,23 +68,18 @@ inline void not_first_enter()
     Sleep(1.5_s);
 }
 
-int main(int argc, const char **argv)
-{
+int main(int argc, const char **argv) {
     init();
 
-    if (setting.first_enter)
-    {
+    if (setting.first_enter) {
         first_enter();
         setting.first_enter = false;
         global.save_game_data();
-    }
-    else
-    {
+    } else {
         not_first_enter();
     }
 
-    while (true)
-    {
+    while (true) {
     }
     return 0;
 }

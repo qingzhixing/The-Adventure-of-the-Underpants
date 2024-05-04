@@ -1,13 +1,11 @@
 #include "global_data_manager.hpp"
 
-#include <iostream>
-#include <fstream>
 #include <direct.h>
-#include <rapidjson/document.h>
-#include <rapidjson/filewritestream.h>
-#include <rapidjson/prettywriter.h>
-#include <rapidjson/istreamwrapper.h>
+#include <fstream>
 #include <rapidjson/error/en.h>
+#include <rapidjson/filewritestream.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/prettywriter.h>
 
 using namespace rapidjson;
 
@@ -19,8 +17,7 @@ const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
 const char *GlobalDataManager::DATA_FILE = "game_data.json";
 
-const char *GlobalDataManager::get_exe_dir()
-{
+const char *GlobalDataManager::get_exe_dir() {
     static char path[1024];
     _getcwd(path, sizeof(path));
     return path;
@@ -28,36 +25,35 @@ const char *GlobalDataManager::get_exe_dir()
 
 #pragma region import_data
 
-void GlobalDataManager::parse_game_data(rapidjson::Value &value)
-{
+void GlobalDataManager::parse_game_data(rapidjson::Value &value) {
+    //    DEBUG(printf("Parsing global game data.\n"));
     const char *player_data_name = player_data.data_name.c_str();
-    if (value.HasMember(player_data_name))
-    {
+    if (value.HasMember(player_data_name)) {
         player_data.import_data(value[player_data_name]);
+    } else {
+        //        DEBUG(printf("Missing player_data object\n"));
     }
 
     const char *game_setting_name = game_setting.data_name.c_str();
-    if (value.HasMember(game_setting_name))
-    {
-        player_data.import_data(value[game_setting_name]);
+    if (value.HasMember(game_setting_name)) {
+        game_setting.import_data(value[game_setting_name]);
+    } else {
+        //        DEBUG(printf("Missing game_setting object\n"));
     }
 }
 
-void GlobalDataManager::load_game_data()
-{
+void GlobalDataManager::load_game_data() {
     /*
         read file
     */
     FILE *file;
     errno_t err = fopen_s(&file, DATA_FILE, "r");
-    if (err != 0)
-    {
+    if (err != 0) {
         DEBUG(printf("fopen_s error: %d\n", err));
         fclose(file);
         return;
     }
-    if (file == nullptr)
-    {
+    if (file == nullptr) {
         DEBUG(printf("Missing file: %s, (file == nullptr)\n", DATA_FILE));
         fclose(file);
         return;
@@ -80,24 +76,21 @@ void GlobalDataManager::load_game_data()
 
     DEBUG(printf(DELETE_ME "Json Parsed\n"));
 
-    if (doc.HasParseError())
-    {
+    if (doc.HasParseError()) {
         printf("Json Parse Error!\n");
-        fprintf(stdout, "\nError(offset %u): %s\n", (unsigned)doc.GetErrorOffset(), GetParseError_En(doc.GetParseError()));
-        HALT();
+        fprintf(stdout, "\nError(offset %u): %s\n", (unsigned) doc.GetErrorOffset(),
+                GetParseError_En(doc.GetParseError()));
         fclose(file);
         return;
     }
 
-    if (!doc.IsObject())
-    {
+    if (!doc.IsObject()) {
         printf("Json is not an object!\n");
         fclose(file);
         return;
     }
 
-    if (doc.HasMember("game_data"))
-    {
+    if (doc.HasMember("game_data")) {
         DEBUG(printf("game_data exist\n"));
         parse_game_data(doc["game_data"]);
     }
@@ -108,16 +101,15 @@ void GlobalDataManager::load_game_data()
 #pragma endregion
 
 #pragma region save_data
-void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::AllocatorType &allocator)
-{
+
+void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::AllocatorType &allocator) {
     Value game_info(kObjectType);
     game_info.AddMember("author", Value().SetString(AUTHOR.c_str(), AUTHOR.length(), allocator), allocator);
     game_info.AddMember("version", Value().SetString(VERSION.c_str(), VERSION.length(), allocator), allocator);
     doc.AddMember("game_info", game_info, allocator);
 }
 
-void GlobalDataManager::add_game_data(Document &doc, rapidjson::Document::AllocatorType &allocator)
-{
+void GlobalDataManager::add_game_data(Document &doc, rapidjson::Document::AllocatorType &allocator) {
 
     Value game_data(kObjectType);
 
@@ -128,8 +120,7 @@ void GlobalDataManager::add_game_data(Document &doc, rapidjson::Document::Alloca
     doc.AddMember("game_data", game_data, allocator);
 }
 
-void GlobalDataManager::save_game_data()
-{
+void GlobalDataManager::save_game_data() {
     Document doc;
     rapidjson::Document::AllocatorType &allocator = doc.GetAllocator();
     doc.SetObject();
@@ -148,8 +139,7 @@ void GlobalDataManager::save_game_data()
 
     FILE *file;
     errno_t err = fopen_s(&file, DATA_FILE, "w");
-    if (err != 0)
-    {
+    if (err != 0) {
         printf("fopen_s error: %d\n", err);
         fclose(file);
         return;

@@ -2,15 +2,14 @@
 #ifndef _CONSOLE_HPP_
 #define _CONSOLE_HPP_
 
-#include <iostream>
 #include <Windows.h>
+#include <iostream>
 
 #define LOW_SPEED 150
 #define MID_SPEED 80
 #define HIGH_SPEED 20
 
-class Console
-{
+class Console {
 public:
     Console();
 
@@ -23,7 +22,7 @@ public:
 
     void clear_screen();
 
-    void hide_console_cursor(HANDLE handle);
+    static void hide_console_cursor(HANDLE handle);
 
     /**
         @param x - horizontal pos
@@ -42,15 +41,14 @@ private:
     HANDLE std_output;
 };
 
-enum TextColorPreset
-{
-    INTENSITY = FOREGROUND_INTENSITY, // 增强
+enum TextColorPreset {
+    INTENSITY = FOREGROUND_INTENSITY,// 增强
     BLACK = 0,
     BLUE = FOREGROUND_BLUE,
     GREEN = FOREGROUND_GREEN,
-    CYAN = BLUE | GREEN, // 青色
+    CYAN = BLUE | GREEN,// 青色
     RED = FOREGROUND_RED,
-    MAGENTA = RED | BLUE, // 洋红,粉紫色
+    MAGENTA = RED | BLUE,// 洋红,粉紫色
     YELLOW = RED | GREEN,
     WHITE = RED | BLUE | GREEN,
     GREY = BLACK | INTENSITY,
@@ -65,4 +63,4 @@ enum TextColorPreset
     DEFAULT = WHITE,
 };
 
-#endif // !_CONSOLE_HPP_
+#endif// !_CONSOLE_HPP_

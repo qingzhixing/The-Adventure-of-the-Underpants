@@ -1,16 +1,15 @@
 #pragma once
-#ifndef __PLAYER_HPP_
-#define __PLAYER_HPP_
+#ifndef PLAYER_HPP_
+#define PLAYER_HPP_
 
-#include <string>
-#include <iostream>
-#include "exportable_data.hpp"
 #include "../lib/include/rapidjson/document.h"
+#include "exportable_data.hpp"
+#include <iostream>
+#include <string>
 
 using std::string;
 
-class PlayerData : public ExportableData
-{
+class PlayerData : public ExportableData {
 public:
     PlayerData(string player_name);
     PlayerData();
@@ -61,4 +60,4 @@ public:
     int defense;
 };
 
-#endif // !__PLAYER_HPP_
+#endif// !PLAYER_HPP_

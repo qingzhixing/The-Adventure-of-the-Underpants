@@ -1,25 +1,26 @@
 #pragma once
-#ifndef __GLOBAL_DATA_MANAGER_HPP_
-#define __GLOBAL_DATA_MANAGER_HPP_
+#ifndef GLOBAL_DATA_MANAGER_HPP_
+#define GLOBAL_DATA_MANAGER_HPP_
 
-#include "player_data.hpp"
-#include <vector>
-#include <rapidjson/document.h>
 #include "game_setting.hpp"
+#include "player_data.hpp"
+#include <rapidjson/document.h>
 #include <string>
+#include <vector>
 
-class GlobalDataManager
-{
+class GlobalDataManager {
 public:
     void load_game_data();
+
     void save_game_data();
+
     static const char *get_exe_dir();
 
 private:
-    void add_game_info(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
+    static void add_game_info(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
+
     void add_game_data(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
 
-    void parse_game_info(rapidjson::Value &value);
     void parse_game_data(rapidjson::Value &value);
 
 public:
@@ -42,4 +43,4 @@ public:
 
 extern GlobalDataManager global;
 
-#endif // !__GLOBAL_DATA_MANAGER_HPP_
+#endif// !GLOBAL_DATA_MANAGER_HPP_

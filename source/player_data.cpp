@@ -1,11 +1,12 @@
 #include "player_data.hpp"
+
+#include <utility>
 #include "debug.hpp"
 
 using namespace rapidjson;
 
-PlayerData::PlayerData(string _name) : ExportableData("player_data")
-{
-    name = _name;
+PlayerData::PlayerData(string _name) : ExportableData("player_data") {
+    name = std::move(_name);
     level = 1;
     experience = 0;
     blood = 100;
@@ -20,8 +21,7 @@ PlayerData::PlayerData(string _name) : ExportableData("player_data")
 
 PlayerData::PlayerData() : PlayerData("no-named") {}
 
-Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const
-{
+Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const {
     DEBUG(printf("Exporting player data.\n"));
 
     Value data(kObjectType);
@@ -42,8 +42,7 @@ Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) con
     return data;
 }
 
-void PlayerData::print_data() const
-{
+void PlayerData::print_data() const {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Level: " << level << std::endl;
     std::cout << "Experience: " << experience << std::endl;
@@ -54,8 +53,7 @@ void PlayerData::print_data() const
     std::cout << "Defense: " << defense << std::endl;
 }
 
-void PlayerData::import_data(const Value &object_data)
-{
+void PlayerData::import_data(const Value &object_data) {
     DEBUG(printf("Importing player data\n"));
 
     PARSE_STRING_VALUE(name);
@@ -73,73 +71,61 @@ void PlayerData::import_data(const Value &object_data)
     DEBUG(printf("Player data imported\n"));
 }
 
-void PlayerData::add_experience(int exp)
-{
+void PlayerData::add_experience(int exp) {
     experience += exp;
     upgrade();
 }
 
-void PlayerData::add_cleanliness(int value)
-{
+void PlayerData::add_cleanliness(int value) {
     cleanliness += value;
     if (cleanliness > max_cleanliness)
         cleanliness = max_cleanliness;
 }
 
-void PlayerData::add_blood(int value)
-{
+void PlayerData::add_blood(int value) {
     blood += value;
     if (blood > max_blood)
         blood = max_blood;
 }
 
-void PlayerData::add_magic(int value)
-{
+void PlayerData::add_magic(int value) {
     magic += value;
     if (magic > max_magic)
         magic = max_magic;
 }
 
-void PlayerData::add_attack(int value)
-{
+void PlayerData::add_attack(int value) {
     attack += value;
 }
 
-void PlayerData::add_defense(int value)
-{
+void PlayerData::add_defense(int value) {
     defense += value;
 }
 
-void PlayerData::lose_blood(int blood_off)
-{
+void PlayerData::lose_blood(int blood_off) {
     blood -= blood_off;
     if (blood < 0)
         blood = 0;
 }
 
-void PlayerData::lose_magic(int magic_off)
-{
+void PlayerData::lose_magic(int magic_off) {
     magic -= magic_off;
     if (magic < 0)
         magic = 0;
 }
 
-void PlayerData::lose_cleanliness(int cleanliness_off)
-{
+void PlayerData::lose_cleanliness(int cleanliness_off) {
     cleanliness -= cleanliness_off;
     if (cleanliness < 0)
         cleanliness = 0;
 }
 
-bool PlayerData::is_dead() const
-{
+bool PlayerData::is_dead() const {
     return blood == 0;
 }
 
-void PlayerData::upgrade()
-{
-    if (experience >= upgrade_experience())
-    {
+void PlayerData::upgrade() {
+    if (experience >= upgrade_experience()) {
         level++;
         cleanliness = max_cleanliness;
         blood = max_blood;
@@ -150,12 +136,10 @@ void PlayerData::upgrade()
     }
 }
 
-inline int PlayerData::upgrade_experience() const
-{
+inline int PlayerData::upgrade_experience() const {
     return level * 100;
 }
 
-inline int PlayerData::experience_to_upgrade() const
-{
+inline int PlayerData::experience_to_upgrade() const {
     return experience - upgrade_experience();
 }

@@ -1,11 +1,10 @@
 #pragma once
-#ifndef _TYPES_HPP_
-#define _TYPES_HPP_
+#ifndef TYPES_HPP_
+#define TYPES_HPP_
 #include <Windows.h>
 
-DWORD operator"" _s(long double secounds)
-{
-    return u_int(secounds * 1000);
+DWORD operator"" _s(long double seconds) {
+    return u_int(seconds * 1000);
 }
 
-#endif // !_TYPES_HPP_
+#endif// !TYPES_HPP_
