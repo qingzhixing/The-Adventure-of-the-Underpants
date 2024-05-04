@@ -52,13 +52,13 @@ void GlobalDataManager::load_game_data()
     errno_t err = fopen_s(&file, DATA_FILE, "r");
     if (err != 0)
     {
-        printf("fopen_s error: %d\n", err);
+        DEBUG(printf("fopen_s error: %d\n", err));
         fclose(file);
         return;
     }
     if (file == nullptr)
     {
-        printf("Missing file: %s, (file == nullptr)\n", DATA_FILE);
+        DEBUG(printf("Missing file: %s, (file == nullptr)\n", DATA_FILE));
         fclose(file);
         return;
     }
@@ -67,14 +67,16 @@ void GlobalDataManager::load_game_data()
         Parse.
     */
 
-    std::ifstream stream(file);
-    IStreamWrapper wrapper(stream);
+    std::ifstream stream(DATA_FILE);
+    string content = get_file_content(DATA_FILE);
+    DEBUG(printf("content:\n%s\n", content.c_str()));
+
     stream.close();
 
     DEBUG(printf(DELETE_ME "Prepared to parse json\n"));
 
     Document doc;
-    doc.ParseStream(wrapper);
+    doc.Parse(content.c_str());
 
     DEBUG(printf(DELETE_ME "Json Parsed\n"));
 

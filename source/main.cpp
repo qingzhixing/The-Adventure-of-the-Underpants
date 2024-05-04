@@ -11,6 +11,8 @@ extern Console console;
 static void init()
 {
     global.load_game_data();
+    player.print_data();
+    setting.print_data();
 }
 
 inline void first_enter()
