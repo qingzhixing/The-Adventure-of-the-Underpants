@@ -9,38 +9,6 @@
 #define MID_SPEED 80
 #define HIGH_SPEED 20
 
-class Console {
-public:
-    Console();
-
-public:
-    /**
-        @brief: slow_print at Cursor on (x,y)
-    */
-    void slow_print(const char *msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
-    void slow_print(const std::string &msg, DWORD sleep_ms, SHORT x = -1, SHORT y = -1);
-
-    void clear_screen();
-
-    static void hide_console_cursor(HANDLE handle);
-
-    /**
-        @param x - horizontal pos
-        @param y - vertical pos
-    */
-    void set_console_cur_pos(SHORT x, SHORT y);
-    void set_console_cur_pos(COORD pos);
-
-    void set_console_text_attr(WORD wAttributes);
-
-    COORD get_console_size();
-
-    COORD get_console_cur_pos();
-
-private:
-    HANDLE std_output;
-};
-
 enum TextColorPreset {
     INTENSITY = FOREGROUND_INTENSITY,// 增强
     BLACK = 0,
@@ -61,6 +29,43 @@ enum TextColorPreset {
     INTENSITY_YELLOW = INTENSITY | YELLOW,
     INTENSITY_WHITE = INTENSITY | WHITE,
     DEFAULT = WHITE,
+};
+
+inline void debug_print_coord(COORD pos, const char *msg = "pos-info");
+inline void debug_print_coord(SHORT X, SHORT Y, const char *msg = "pos-info");
+void debug_print_console_info(HANDLE handle);
+
+class Console {
+public:
+    Console();
+
+public:
+    /**
+        @brief: slow_print at Cursor on (x,y)
+    */
+    Console &slow_print(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, COORD pos = {-1, -1}, int wAttributes = TextColorPreset::DEFAULT);
+    Console &slow_print(const std::string &msg, int wAttributes);
+    Console &slow_print(const std::string &msg, COORD pos);
+
+    Console &clear_screen();
+
+    static void hide_console_cursor(HANDLE handle);
+
+    /**
+        @param x - horizontal pos
+        @param y - vertical pos
+    */
+    Console &set_console_cur_pos(SHORT x, SHORT y);
+    Console &set_console_cur_pos(COORD pos);
+
+    Console &set_console_text_attr(int wAttributes);
+
+    COORD get_console_size();
+
+    COORD get_console_cur_pos();
+
+private:
+    HANDLE std_output;
 };
 
 #endif// !_CONSOLE_HPP_
