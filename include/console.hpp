@@ -31,8 +31,14 @@ enum TextColorPreset {
     DEFAULT = WHITE,
 };
 
-inline void debug_print_coord(COORD pos, const char *msg = "pos-info");
-inline void debug_print_coord(SHORT X, SHORT Y, const char *msg = "pos-info");
+struct ConsoleCoord {
+    explicit ConsoleCoord(COORD coord) { x = coord.X, y = coord.Y; }
+    ConsoleCoord(int X, int Y) : x(X), y(Y) {}
+    int x, y;
+};
+
+inline void debug_print_coord(ConsoleCoord pos, const char *msg = "pos-info");
+inline void debug_print_coord(int X, int Y, const char *msg = "pos-info");
 void debug_print_console_info(HANDLE handle);
 
 class Console {
@@ -43,9 +49,9 @@ public:
     /**
         @brief: slow_print at Cursor on (x,y)
     */
-    Console &slow_print(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, COORD pos = {-1, -1}, int wAttributes = TextColorPreset::DEFAULT);
+    Console &slow_print(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, ConsoleCoord pos = {-1, -1}, int wAttributes = TextColorPreset::DEFAULT);
     Console &slow_print(const std::string &msg, int wAttributes);
-    Console &slow_print(const std::string &msg, COORD pos);
+    Console &slow_print(const std::string &msg, ConsoleCoord pos);
 
     Console &clear_screen();
 
@@ -55,14 +61,14 @@ public:
         @param x - horizontal pos
         @param y - vertical pos
     */
-    Console &set_console_cur_pos(SHORT x, SHORT y);
-    Console &set_console_cur_pos(COORD pos);
+    Console &set_console_cur_pos(int x, int y);
+    Console &set_console_cur_pos(ConsoleCoord pos);
 
     Console &set_console_text_attr(int wAttributes);
 
     COORD get_console_size();
 
-    COORD get_console_cur_pos();
+    ConsoleCoord get_console_cur_pos();
 
 private:
     HANDLE std_output;

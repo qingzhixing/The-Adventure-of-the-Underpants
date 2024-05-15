@@ -15,20 +15,20 @@ Console::Console() {
     // SetConsoleOutputCP(936);
 }
 
-void debug_print_coord(COORD pos, const char *msg) {
+extern void debug_print_coord(ConsoleCoord pos, const char *msg) {
     DEBUG({
-        printf("%s : {X: %d, Y: %d}\n", msg, pos.X, pos.Y);
+        printf("%s : {X: %d, Y: %d}\n", msg, pos.x, pos.y);
     });
 }
-void debug_print_coord(SHORT X, SHORT Y, const char *msg) {
+extern void debug_print_coord(int X, int Y, const char *msg) {
     debug_print_coord({X, Y}, msg);
 }
 
-Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, COORD pos, int wAttributes) {
-    COORD old_pos = get_console_cur_pos();
-    //TODO: delete this
-    debug_print_coord(old_pos, "old_pos");
-    debug_print_coord(pos, "new_pos");
+Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, ConsoleCoord pos, int wAttributes) {
+    ConsoleCoord old_pos = get_console_cur_pos();
+    //    //TODO: delete this
+    //    debug_print_coord(old_pos, "old_pos");
+    //    debug_print_coord(pos, "new_pos");
 
     set_console_cur_pos(pos);
 
@@ -49,7 +49,7 @@ Console &Console::slow_print(const std::string &msg, int wAttributes) {
     return slow_print(msg, HIGH_SPEED, {-1, -1}, wAttributes);
 }
 
-Console &Console::slow_print(const std::string &msg, COORD pos) {
+Console &Console::slow_print(const std::string &msg, ConsoleCoord pos) {
     return slow_print(msg, HIGH_SPEED, pos);
 }
 
@@ -107,22 +107,22 @@ void Console::hide_console_cursor(HANDLE handle) {
     @param x - horizontal
     @param y - vertical
 */
-Console &Console::set_console_cur_pos(SHORT x, SHORT y) {
+Console &Console::set_console_cur_pos(int x, int y) {
     COORD console_size = get_console_size();
 
+    //     FIXME!: 这里到底为啥错了？
     if (x > console_size.X || y > console_size.Y || x < 0 || y < 0) {
-        // TODO: delete this
+        // FIXME!: delete this
         debug_print_coord(x, y, "Invalid pos");
         return *this;
     }
-    COORD new_pos({x, y});
-    SetConsoleCursorPosition(std_output, new_pos);
+    SetConsoleCursorPosition(std_output, COORD{(short) x, (short) y});
 
     return *this;
 }
 
-Console &Console::set_console_cur_pos(COORD pos) {
-    return set_console_cur_pos(pos.X, pos.Y);
+Console &Console::set_console_cur_pos(ConsoleCoord pos) {
+    return set_console_cur_pos(pos.x, pos.y);
 }
 
 COORD Console::get_console_size() {
@@ -163,13 +163,14 @@ void debug_print_console_info(HANDLE handle) {
     });
 }
 
-COORD Console::get_console_cur_pos() {
+// FIXME!: 获取的信息貌似不对,查看microsoft有无提供GetConsoleScreenBufferInfoEx的错误检测
+ConsoleCoord Console::get_console_cur_pos() {
     CONSOLE_SCREEN_BUFFER_INFOEX info;
     GetConsoleScreenBufferInfoEx(std_output, &info);
 
     debug_print_console_info(std_output);
 
-    return info.dwCursorPosition;
+    return ConsoleCoord(info.dwCursorPosition);
 }
 
 Console &Console::set_console_text_attr(int wAttributes) {

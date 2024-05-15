@@ -61,7 +61,6 @@ inline static void first_enter() {
 inline static void not_first_enter() {
 
     console.slow_print("underpants!", HIGH_SPEED, {5, 10});
-    HALT();
     Sleep(1.5_s);
     console.clear_screen();
 
@@ -73,6 +72,8 @@ inline static void not_first_enter() {
     Sleep(1.5_s);
     console.clear_screen();
 
+    HALT();
+
     Sleep(1.5_s);
 }
 
@@ -81,9 +82,7 @@ int main(int argc, const char **argv) {
     init();
 
     console.clear_screen();
-    HALT();
-
-    //    HALT({ debug_print_coord(console.get_console_size(), "console.get_console_size()"); });
+    //    HALT();
 
     if (setting.first_enter) {
         first_enter();
