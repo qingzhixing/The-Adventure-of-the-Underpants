@@ -77,7 +77,26 @@ inline static void not_first_enter() {
     Sleep(1.5_s);
 }
 
+void handle_args(int argc, const char **argv) {
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+            printf("Usage: %s [OPTION]\n", argv[0]);
+            printf("Options:\n");
+            printf("  -h, --help     Show this help message and exit\n");
+            printf("  -v, --version  Show version information and exit\n");
+            exit(0);
+        } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
+            printf("Underpants' World v1.0\n");
+            exit(0);
+        } else {
+            printf("Unknown option: %s\n", argv[i]);
+            exit(1);
+        }
+    }
+}
+
 int main(int argc, const char **argv) {
+    handle_args(argc, argv);
     printf("Hello, Underpants!\n");
     init();
 

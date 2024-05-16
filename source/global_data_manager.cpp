@@ -1,10 +1,10 @@
 #include "global_data_manager.hpp"
+#include "file_controller.hpp"
 
 #include <direct.h>
 #include <fstream>
 #include <rapidjson/error/en.h>
 #include <rapidjson/filewritestream.h>
-#include <rapidjson/istreamwrapper.h>
 #include <rapidjson/prettywriter.h>
 
 using namespace rapidjson;
@@ -15,13 +15,8 @@ const string GlobalDataManager::AUTHOR = "qingzhixing sama!";
 
 const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
-const char *GlobalDataManager::DATA_FILE = "game_data.json";
+const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
 
-const char *GlobalDataManager::get_exe_dir() {
-    static char path[1024];
-    _getcwd(path, sizeof(path));
-    return path;
-}
 
 #pragma region import_data
 
@@ -47,14 +42,14 @@ void GlobalDataManager::load_game_data() {
         read file
     */
     FILE *file;
-    errno_t err = fopen_s(&file, DATA_FILE, "r");
+    errno_t err = fopen_s(&file, DATA_FILE.c_str(), "r");
     if (err != 0) {
         DEBUG(printf("fopen_s error: %d\n", err));
         fclose(file);
         return;
     }
     if (file == nullptr) {
-        DEBUG(printf("Missing file: %s, (file == nullptr)\n", DATA_FILE));
+        DEBUG(printf("Missing file: %s, (file == nullptr)\n", DATA_FILE.c_str()));
         fclose(file);
         return;
     }
@@ -138,7 +133,7 @@ void GlobalDataManager::save_game_data() {
     add_game_data(doc, allocator);
 
     FILE *file;
-    errno_t err = fopen_s(&file, DATA_FILE, "w");
+    errno_t err = fopen_s(&file, DATA_FILE.c_str(), "w");
     if (err != 0) {
         printf("fopen_s error: %d\n", err);
         fclose(file);

@@ -37,6 +37,4 @@
 
 #define CANCEL(CodeSegment) ((void) 0)
 
-std::string get_file_content(const char *file);
-
 #endif// !DEBUG_HPP_

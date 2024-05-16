@@ -14,7 +14,6 @@ public:
 
     void save_game_data();
 
-    static const char *get_exe_dir();
 
 private:
     static void add_game_info(rapidjson::Document &doc, rapidjson::Document::AllocatorType &allocator);
@@ -38,7 +37,7 @@ public:
     const static string VERSION;
 
 public:
-    const static char *DATA_FILE;
+    const static std::string &DATA_FILE;
 };
 
 extern GlobalDataManager global;

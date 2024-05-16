@@ -15,12 +15,12 @@ Console::Console() {
     // SetConsoleOutputCP(936);
 }
 
-extern void debug_print_coord(ConsoleCoord pos, const char *msg) {
+void debug_print_coord(ConsoleCoord pos, const char *msg) {
     DEBUG({
         printf("%s : {X: %d, Y: %d}\n", msg, pos.x, pos.y);
     });
 }
-extern void debug_print_coord(int X, int Y, const char *msg) {
+void debug_print_coord(int X, int Y, const char *msg) {
     debug_print_coord({X, Y}, msg);
 }
 
