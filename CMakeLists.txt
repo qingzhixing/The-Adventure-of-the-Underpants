@@ -2,6 +2,10 @@
 cmake_minimum_required(VERSION 3.5)
 # 设置项目名称
 project(underpants)
+
+# Enable C++20
+set(CMAKE_CXX_STANDARD 20)
+
 # 添加可执行文件
 # set(SRC_LIST 
 #     ./source/main.cpp
@@ -11,7 +15,7 @@ aux_source_directory(./lib/source/ SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST}
         source/logger.cpp
         include/logger.hpp
-        include/file_controller.cpp
+        source/file_controller.cpp
         include/file_controller.hpp)
 
 # 添加头文件目录

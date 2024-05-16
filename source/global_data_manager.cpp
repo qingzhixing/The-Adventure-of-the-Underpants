@@ -1,5 +1,6 @@
 #include "global_data_manager.hpp"
 #include "file_controller.hpp"
+#include "logger.hpp"
 
 #include <direct.h>
 #include <fstream>
@@ -17,6 +18,7 @@ const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
 const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
 
+extern Logger logger;
 
 #pragma region import_data
 
@@ -38,21 +40,6 @@ void GlobalDataManager::parse_game_data(rapidjson::Value &value) {
 }
 
 void GlobalDataManager::load_game_data() {
-    /*
-        read file
-    */
-    FILE *file;
-    errno_t err = fopen_s(&file, DATA_FILE.c_str(), "r");
-    if (err != 0) {
-        DEBUG(printf("fopen_s error: %d\n", err));
-        fclose(file);
-        return;
-    }
-    if (file == nullptr) {
-        DEBUG(printf("Missing file: %s, (file == nullptr)\n", DATA_FILE.c_str()));
-        fclose(file);
-        return;
-    }
 
     /*
         Parse.
@@ -75,13 +62,11 @@ void GlobalDataManager::load_game_data() {
         printf("Json Parse Error!\n");
         fprintf(stdout, "\nError(offset %u): %s\n", (unsigned) doc.GetErrorOffset(),
                 GetParseError_En(doc.GetParseError()));
-        fclose(file);
         return;
     }
 
     if (!doc.IsObject()) {
         printf("Json is not an object!\n");
-        fclose(file);
         return;
     }
 
@@ -89,8 +74,6 @@ void GlobalDataManager::load_game_data() {
         DEBUG(printf("game_data exist\n"));
         parse_game_data(doc["game_data"]);
     }
-
-    fclose(file);
 }
 
 #pragma endregion
@@ -133,10 +116,11 @@ void GlobalDataManager::save_game_data() {
     add_game_data(doc, allocator);
 
     FILE *file;
-    errno_t err = fopen_s(&file, DATA_FILE.c_str(), "w");
-    if (err != 0) {
-        printf("fopen_s error: %d\n", err);
-        fclose(file);
+    try {
+        file = file_open(DATA_FILE, "w");
+    } catch (std::exception &e) {
+        logger.log_msg(e.what(), LOG_LEVEL_ERROR);
+        logger.log_msg("Failed to save game data.", LOG_LEVEL_ERROR);
         return;
     }
 
