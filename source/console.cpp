@@ -146,7 +146,8 @@ void debug_print_console_info(HANDLE handle) {
     DEBUG({
         CONSOLE_SCREEN_BUFFER_INFOEX info;
         GetConsoleScreenBufferInfoEx(handle, &info);
-
+        // FIXME:这里有异常，数据出现不可能状况
+        logger.flog_msg_debug("======debug_print_console_info======");
         logger.flog_msg_debug("cbSize: %lu\n", info.cbSize);
         logger.flog_msg_debug("dwSize: %d, %d\n", info.dwSize.X, info.dwSize.Y);
         logger.flog_msg_debug("dwCursorPosition: %d, %d\n", info.dwCursorPosition.X, info.dwCursorPosition.Y);
