@@ -47,19 +47,20 @@ void GlobalDataManager::load_game_data() {
 
     std::ifstream stream(DATA_FILE);
     string content = get_file_content(DATA_FILE);
-    DEBUG(printf("content:\n%s\n", content.c_str()));
+    logger.flog_msg_debug("content:\n%s\n", content.c_str());
 
     stream.close();
 
-    DEBUG(printf(DELETE_ME "Prepared to parse json\n"));
+    logger.flog_msg_debug("Prepared to parse json\n");
 
     Document doc;
     doc.Parse(content.c_str());
 
-    DEBUG(printf(DELETE_ME "Json Parsed\n"));
+    logger.flog_msg_debug("Json Parsed\n");
 
     if (doc.HasParseError()) {
         printf("Json Parse Error!\n");
+        logger.flog_msg_error("Json Parse Error!\n");
         fprintf(stdout, "\nError(offset %u): %s\n", (unsigned) doc.GetErrorOffset(),
                 GetParseError_En(doc.GetParseError()));
         return;
@@ -71,7 +72,7 @@ void GlobalDataManager::load_game_data() {
     }
 
     if (doc.HasMember("game_data")) {
-        DEBUG(printf("game_data exist\n"));
+        logger.flog_msg_debug("game_data exist\n");
         parse_game_data(doc["game_data"]);
     }
 }

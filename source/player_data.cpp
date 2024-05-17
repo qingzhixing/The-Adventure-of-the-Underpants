@@ -1,7 +1,7 @@
 #include "player_data.hpp"
 
-#include <utility>
 #include "debug.hpp"
+#include <utility>
 
 using namespace rapidjson;
 
@@ -22,7 +22,7 @@ PlayerData::PlayerData(string _name) : ExportableData("player_data") {
 PlayerData::PlayerData() : PlayerData("no-named") {}
 
 Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) const {
-    DEBUG(printf("Exporting player data.\n"));
+    logger.flog_msg_debug("Exporting player data.\n");
 
     Value data(kObjectType);
     data.AddMember(MEMBER_2_STR(name), Value().SetString(name.c_str(), name.length(), allocator), allocator);
@@ -37,7 +37,7 @@ Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) con
     data.AddMember(MEMBER_2_STR(attack), attack, allocator);
     data.AddMember(MEMBER_2_STR(defense), defense, allocator);
 
-    DEBUG(printf("Exporting player data done.\n"));
+    logger.flog_msg_debug("Exporting player data done.\n");
 
     return data;
 }
@@ -54,7 +54,7 @@ void PlayerData::print_data() const {
 }
 
 void PlayerData::import_data(const Value &object_data) {
-    DEBUG(printf("Importing player data\n"));
+    logger.flog_msg_debug("Importing player data\n");
 
     PARSE_STRING_VALUE(name);
     PARSE_INT_VALUE(level);
@@ -68,7 +68,7 @@ void PlayerData::import_data(const Value &object_data) {
     PARSE_INT_VALUE(attack);
     PARSE_INT_VALUE(defense);
 
-    DEBUG(printf("Player data imported\n"));
+    logger.flog_msg_debug("Player data imported\n");
 }
 
 void PlayerData::add_experience(int exp) {

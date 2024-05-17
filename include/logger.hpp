@@ -35,6 +35,11 @@ public:
 
 public:
     void log_msg(const std::string &msg, LogLevel level = LOG_LEVEL_DEBUG);
+    void flog_msg_debug(const char *_format, ...);
+    void flog_msg_info(const char *_format, ...);
+    void flog_msg_warn(const char *_format, ...);
+    void flog_msg_error(const char *_format, ...);
+    void flog_msg_fatal(const char *_format, ...);
     void set_log_level(LogLevel level);
     bool set_logger_file(const std::string &file_name);
     void set_logger_stream(std::ofstream &&stream);

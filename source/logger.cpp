@@ -5,6 +5,7 @@
 #include "logger.hpp"
 #include "file_controller.hpp"
 #include <chrono>
+#include <cstdarg>
 
 Logger logger(LOG_LEVEL_DEBUG);
 
@@ -42,6 +43,55 @@ bool Logger::set_logger_file(const std::string &file_name) {
 
 bool Logger::is_log_level_enabled(LogLevel level) const {
     return level >= log_level;
+}
+
+static const int buf_size = 2048;
+static std::string formatted_string(const char *_format, va_list args) {
+
+    char buf[buf_size];
+    vsnprintf(buf, buf_size, _format, args);
+    return {buf};
+}
+
+void Logger::flog_msg_debug(const char *_format, ...) {
+    std::string msg;
+    va_list args;
+    va_start(args, _format);
+    msg = formatted_string(_format, args);
+    va_end(args);
+    log_msg(msg, LogLevel::LOG_LEVEL_DEBUG);
+}
+void Logger::flog_msg_info(const char *_format, ...) {
+    std::string msg;
+    va_list args;
+    va_start(args, _format);
+    msg = formatted_string(_format, args);
+    va_end(args);
+    log_msg(msg, LogLevel::LOG_LEVEL_INFO);
+}
+void Logger::flog_msg_warn(const char *_format, ...) {
+    std::string msg;
+    va_list args;
+    va_start(args, _format);
+    msg = formatted_string(_format, args);
+    va_end(args);
+    log_msg(msg, LogLevel::LOG_LEVEL_WARN);
+}
+void Logger::flog_msg_error(const char *_format, ...) {
+    std::string msg;
+    va_list args;
+    va_start(args, _format);
+    msg = formatted_string(_format, args);
+    va_end(args);
+    log_msg(msg, LogLevel::LOG_LEVEL_ERROR);
+}
+void Logger::flog_msg_fatal(const char *_format, ...) {
+    std::string msg;
+    va_list args;
+    va_start(args, _format);
+    msg = formatted_string(_format, args);
+    va_end(args);
+    log_msg(msg, LogLevel::LOG_LEVEL_FATAL);
 }
 
 std::string get_formated_time() {

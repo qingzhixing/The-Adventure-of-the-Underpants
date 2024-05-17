@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _CONSOLE_HPP_
-#define _CONSOLE_HPP_
+#ifndef CONSOLE_HPP_
+#define CONSOLE_HPP_
 
 #include <Windows.h>
 #include <iostream>
@@ -37,8 +37,8 @@ struct ConsoleCoord {
     int x, y;
 };
 
-inline void debug_print_coord(ConsoleCoord pos, const char *msg = "pos-info");
-inline void debug_print_coord(int X, int Y, const char *msg = "pos-info");
+void debug_print_coord(ConsoleCoord pos, const char *msg = "pos-info");
+void debug_print_coord(int X, int Y, const char *msg = "pos-info");
 void debug_print_console_info(HANDLE handle);
 
 class Console {
@@ -74,4 +74,4 @@ private:
     HANDLE std_output;
 };
 
-#endif// !_CONSOLE_HPP_
+#endif// !CONSOLE_HPP_

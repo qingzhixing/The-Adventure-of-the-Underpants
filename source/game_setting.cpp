@@ -6,14 +6,14 @@ using namespace rapidjson;
 GameSetting::GameSetting() : ExportableData("game_setting") {}
 
 Value GameSetting::export_data(rapidjson::Document::AllocatorType &allocator) const {
-    DEBUG(printf("Exporting game_setting\n"));
+    logger.flog_msg_debug("Exporting game_setting\n");
 
     Value data(kObjectType);
     data.AddMember("first_enter", first_enter, allocator);
     data.AddMember("is_debug", is_debug, allocator);
     data.AddMember("skip_leading", skip_leading, allocator);
 
-    DEBUG(printf("Exporting game_setting done\n"));
+    logger.flog_msg_debug("Exporting game_setting done\n");
 
     return data;
 }

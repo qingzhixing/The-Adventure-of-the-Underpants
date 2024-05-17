@@ -1,5 +1,6 @@
 #include "console.hpp"
 #include "debug.hpp"
+#include "logger.hpp"
 #include <string>
 
 Console console;
@@ -17,7 +18,7 @@ Console::Console() {
 
 void debug_print_coord(ConsoleCoord pos, const char *msg) {
     DEBUG({
-        printf("%s : {X: %d, Y: %d}\n", msg, pos.x, pos.y);
+        logger.flog_msg_debug("%s : {X: %d, Y: %d}\n", msg, pos.x, pos.y);
     });
 }
 void debug_print_coord(int X, int Y, const char *msg) {
@@ -26,10 +27,6 @@ void debug_print_coord(int X, int Y, const char *msg) {
 
 Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, ConsoleCoord pos, int wAttributes) {
     ConsoleCoord old_pos = get_console_cur_pos();
-    //    //TODO: delete this
-    //    debug_print_coord(old_pos, "old_pos");
-    //    debug_print_coord(pos, "new_pos");
-
     set_console_cur_pos(pos);
 
     set_console_text_attr(wAttributes);
@@ -150,16 +147,16 @@ void debug_print_console_info(HANDLE handle) {
         CONSOLE_SCREEN_BUFFER_INFOEX info;
         GetConsoleScreenBufferInfoEx(handle, &info);
 
-        printf("cbSize: %lu\n", info.cbSize);
-        printf("dwSize: %d, %d\n", info.dwSize.X, info.dwSize.Y);
-        printf("dwCursorPosition: %d, %d\n", info.dwCursorPosition.X, info.dwCursorPosition.Y);
-        printf("wAttributes: %d\n", info.wAttributes);
-        printf("srWindow: %d, %d, %d, %d\n", info.srWindow.Left, info.srWindow.Top, info.srWindow.Right, info.srWindow.Bottom);
+        logger.flog_msg_debug("cbSize: %lu\n", info.cbSize);
+        logger.flog_msg_debug("dwSize: %d, %d\n", info.dwSize.X, info.dwSize.Y);
+        logger.flog_msg_debug("dwCursorPosition: %d, %d\n", info.dwCursorPosition.X, info.dwCursorPosition.Y);
+        logger.flog_msg_debug("wAttributes: %d\n", info.wAttributes);
+        logger.flog_msg_debug("srWindow: %d, %d, %d, %d\n", info.srWindow.Left, info.srWindow.Top, info.srWindow.Right, info.srWindow.Bottom);
 
-        printf("dwMaximumWindowSize: %d, %d\n", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
-        printf("wPopupAttributes: %d\n", info.wPopupAttributes);
+        logger.flog_msg_debug("dwMaximumWindowSize: %d, %d\n", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
+        logger.flog_msg_debug("wPopupAttributes: %d\n", info.wPopupAttributes);
 
-        printf("bFullscreenSupported: %d\n", info.bFullscreenSupported);
+        logger.flog_msg_debug("bFullscreenSupported: %d\n", info.bFullscreenSupported);
     });
 }
 
