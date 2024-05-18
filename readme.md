@@ -4,6 +4,8 @@
 
 ## 🪦Milestones
 
-- [x] 🪵 Logger类完成！
-  ![logger_write](./assets/imgs/logger_write.png)
-  ![logger_src](./assets/imgs/logger_src.png)
+- [x] 🪵 Logger类完成！ - 2024-5-16
+  ![logger_write](./assets/imgs/logger_write-2024-5-16.png)
+  ![logger_src](./assets/imgs/logger_src-2024-5-16.png)
+- [x] 🖥️ Console类修复完成！现在有更好看的log! - 2024-5-18
+  ![console fix better log](assets/imgs/Console_fixed-better_log-2024-5-18.png)

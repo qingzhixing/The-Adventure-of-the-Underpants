@@ -14,7 +14,7 @@ public:
 public:
     rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
     void import_data(const rapidjson::Value &object_data) override;
-    void print_data() const override;
+    void log_data() const override;
 
 public:
     bool first_enter = true;

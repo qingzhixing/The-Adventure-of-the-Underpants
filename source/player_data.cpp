@@ -1,4 +1,4 @@
-#include "player_data.hpp"
+#include "game_data/player_data.hpp"
 
 #include "debug.hpp"
 #include <utility>
@@ -42,15 +42,20 @@ Value PlayerData::export_data(rapidjson::Document::AllocatorType &allocator) con
     return data;
 }
 
-void PlayerData::print_data() const {
-    std::cout << "Name: " << name << std::endl;
-    std::cout << "Level: " << level << std::endl;
-    std::cout << "Experience: " << experience << std::endl;
-    std::cout << "Blood: " << blood << "/" << max_blood << std::endl;
-    std::cout << "Magic: " << magic << "/" << max_magic << std::endl;
-    std::cout << "Cleanliness: " << cleanliness << "/" << max_cleanliness << std::endl;
-    std::cout << "Attack: " << attack << std::endl;
-    std::cout << "Defense: " << defense << std::endl;
+void PlayerData::log_data() const {
+    logger.flog_msg_info("==== Player Data ====");
+    logger.flog_msg_info("Name: %s", name.c_str());
+    logger.flog_msg_info("Level: %d", level);
+    logger.flog_msg_info("Experience: %d", experience);
+    logger.flog_msg_info("Blood: %d", blood);
+    logger.flog_msg_info("Max Blood: %d", max_blood);
+    logger.flog_msg_info("Magic: %d", magic);
+    logger.flog_msg_info("Max Magic: %d", max_magic);
+    logger.flog_msg_info("Cleanliness: %d", cleanliness);
+    logger.flog_msg_info("Max Cleanliness: %d", max_cleanliness);
+    logger.flog_msg_info("Attack: %d", attack);
+    logger.flog_msg_info("Defense: %d", defense);
+    logger.flog_msg_info("==== End Player Data ====\n");
 }
 
 void PlayerData::import_data(const Value &object_data) {

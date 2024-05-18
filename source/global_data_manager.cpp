@@ -1,8 +1,6 @@
 #include "global_data_manager.hpp"
 #include "file_controller.hpp"
-#include "logger.hpp"
 
-#include <direct.h>
 #include <fstream>
 #include <rapidjson/error/en.h>
 #include <rapidjson/filewritestream.h>
@@ -18,27 +16,35 @@ const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
 const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
 
-extern Logger logger;
 
 #pragma region import_data
 
+/**
+ * @brief Import data from json.
+ * @param value - root of parsing data
+ */
 void GlobalDataManager::parse_game_data(rapidjson::Value &value) {
-    //    DEBUG(printf("Parsing global game data.\n"));
-    const char *player_data_name = player_data.data_name.c_str();
+    logger.log_msg("Parsing global game data.\n", LOG_LEVEL_DEBUG);
+
+    const char *player_data_name = player_data.json_key_name.c_str();
+
     if (value.HasMember(player_data_name)) {
         player_data.import_data(value[player_data_name]);
     } else {
-        //        DEBUG(printf("Missing player_data object\n"));
+        logger.log_msg("Missing player_data object\n", LOG_LEVEL_WARN);
     }
 
-    const char *game_setting_name = game_setting.data_name.c_str();
+    const char *game_setting_name = game_setting.json_key_name.c_str();
     if (value.HasMember(game_setting_name)) {
         game_setting.import_data(value[game_setting_name]);
     } else {
-        //        DEBUG(printf("Missing game_setting object\n"));
+        logger.log_msg("Missing game_setting object\n", LOG_LEVEL_WARN);
     }
 }
 
+/**
+ * @brief load game data from json file.
+ */
 void GlobalDataManager::load_game_data() {
 
     /*
@@ -46,6 +52,7 @@ void GlobalDataManager::load_game_data() {
     */
 
     std::ifstream stream(DATA_FILE);
+    create_file(DATA_FILE);
     string content = get_file_content(DATA_FILE);
     logger.flog_msg_debug("content:\n%s\n", content.c_str());
 
@@ -59,20 +66,19 @@ void GlobalDataManager::load_game_data() {
     logger.flog_msg_debug("Json Parsed\n");
 
     if (doc.HasParseError()) {
-        printf("Json Parse Error!\n");
+        //        printf("Json Parse Error!\n");
         logger.flog_msg_error("Json Parse Error!\n");
-        fprintf(stdout, "\nError(offset %u): %s\n", (unsigned) doc.GetErrorOffset(),
-                GetParseError_En(doc.GetParseError()));
+        logger.flog_msg_error("Error(offset %u): %s\n", (unsigned) doc.GetErrorOffset(), GetParseError_En(doc.GetParseError()));
         return;
     }
 
     if (!doc.IsObject()) {
-        printf("Json is not an object!\n");
+        logger.flog_msg_error("Json is not an object!\n");
         return;
     }
 
     if (doc.HasMember("game_data")) {
-        logger.flog_msg_debug("game_data exist\n");
+        logger.flog_msg_info("game_data exist\n");
         parse_game_data(doc["game_data"]);
     }
 }

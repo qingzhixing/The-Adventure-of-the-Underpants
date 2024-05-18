@@ -1,5 +1,4 @@
 #include "main.hpp"
-#include "logger.hpp"
 
 extern GlobalDataManager global;
 
@@ -11,8 +10,8 @@ extern Console console;
 
 inline static void init() {
     global.load_game_data();
-    player.print_data();
-    setting.print_data();
+    player.log_data();
+    setting.log_data();
 }
 
 inline static void first_enter() {
@@ -38,7 +37,7 @@ inline static void first_enter() {
      * @brief Get Player Data
      */
 
-    console.slow_print("Please enter your name: ", HIGH_SPEED, {30, 8})
+    console.slow_print_then("Please enter your name: ", HIGH_SPEED, {30, 8})
             .set_console_text_attr(TextColorPreset::INTENSITY_YELLOW);
 
     /**
@@ -52,10 +51,10 @@ inline static void first_enter() {
     */
     global.save_game_data();
 
-    console.slow_print("Hello, ", {30, 10})
-            .slow_print(player.name, TextColorPreset::INTENSITY_RED)
+    console.slow_print_then("Hello, ", {30, 10})
+            .slow_print_then(player.name, TextColorPreset::INTENSITY_RED)
             .slow_print(" !");
-    player.print_data();
+    player.log_data();
     Sleep(1.5_s);
 }
 
@@ -65,17 +64,15 @@ inline static void not_first_enter() {
     Sleep(1.5_s);
     console.clear_screen();
 
-    console.slow_print("Hello, ", {30, 10})
-            .slow_print(player.name, TextColorPreset::INTENSITY_RED)
+    console.slow_print_then("Hello, ", {30, 10})
+            .slow_print_then(player.name, TextColorPreset::INTENSITY_RED)
             .slow_print(" !")
             .slow_print("Welcome back to Underpants' World!", HIGH_SPEED, {30, 12})
             .slow_print("Now! Start your adventure!", HIGH_SPEED, {30, 16});
     Sleep(1.5_s);
-    console.clear_screen();
 
     HALT();
-
-    Sleep(1.5_s);
+    console.clear_screen();
 }
 
 void handle_args(int argc, const char **argv) {
@@ -100,10 +97,11 @@ int main(int argc, const char **argv) {
     handle_args(argc, argv);
     printf("Hello, Underpants!\n");
     logger.log_msg("Hello, Underpants!", LOG_LEVEL_DEBUG);
+    console.clear_screen();
+
     init();
 
     console.clear_screen();
-    //    HALT();
 
     if (setting.first_enter) {
         first_enter();
@@ -114,6 +112,7 @@ int main(int argc, const char **argv) {
     }
 
     while (true) {
+        Sleep(1000);
     }
     return 0;
 }

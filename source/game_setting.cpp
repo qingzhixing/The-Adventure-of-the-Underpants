@@ -1,4 +1,4 @@
-#include "game_setting.hpp"
+#include "game_data/game_setting.hpp"
 
 #include <iostream>
 using namespace rapidjson;
@@ -18,11 +18,12 @@ Value GameSetting::export_data(rapidjson::Document::AllocatorType &allocator) co
     return data;
 }
 
-void GameSetting::print_data() const {
-    std::cout << "GameSetting: " << std::endl;
-    std::cout << "first_enter: " << bool_2_string(first_enter) << std::endl;
-    std::cout << "is_debug: " << bool_2_string(is_debug) << std::endl;
-    std::cout << "skip_leading: " << bool_2_string(skip_leading) << std::endl;
+void GameSetting::log_data() const {
+    logger.log_msg("==== Game Setting Data ====", LOG_LEVEL_INFO);
+    logger.flog_msg_info("first_enter: %s", first_enter ? "true" : "false");
+    logger.flog_msg_info("is_debug: %s", is_debug ? "true" : "false");
+    logger.flog_msg_info("skip_leading: %s", skip_leading ? "true" : "false");
+    logger.log_msg("==== End Game Setting Data ====\n", LOG_LEVEL_INFO);
 }
 
 void GameSetting::import_data(const Value &object_data) {

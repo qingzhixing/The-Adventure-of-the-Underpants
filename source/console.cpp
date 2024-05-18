@@ -16,16 +16,34 @@ Console::Console() {
     // SetConsoleOutputCP(936);
 }
 
-void debug_print_coord(ConsoleCoord pos, const char *msg) {
+#pragma region console_debug
+
+void debug_log_coord(ConsoleCoord pos, const char *msg) {
     DEBUG({
         logger.flog_msg_debug("%s : {X: %d, Y: %d}\n", msg, pos.x, pos.y);
     });
 }
-void debug_print_coord(int X, int Y, const char *msg) {
-    debug_print_coord({X, Y}, msg);
+void debug_log_coord(int X, int Y, const char *msg) {
+    debug_log_coord({X, Y}, msg);
 }
 
-Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, ConsoleCoord pos, int wAttributes) {
+void debug_log_console_info(HANDLE handle) {
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(handle, &info);
+    logger.log_msg("==== CONSOLE_SCREEN_BUFFER_INFO ====", LOG_LEVEL_INFO);
+    logger.flog_msg_info("Console size: (%d, %d)", info.srWindow.Right - info.srWindow.Left + 1, info.srWindow.Bottom - info.srWindow.Top + 1);
+    logger.flog_msg_info("Console cursor pos: (%d, %d)", info.dwCursorPosition.X, info.dwCursorPosition.Y);
+    logger.flog_msg_info("Console text attr: %d", info.wAttributes);
+    logger.flog_msg_info("Console dwSize: (%d, %d)", info.dwSize.X, info.dwSize.Y);
+    logger.flog_msg_info("Console dwMaximumWindowSize: (%d, %d)", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
+    logger.log_msg("==== END CONSOLE_SCREEN_BUFFER_INFO ====\n", LOG_LEVEL_INFO);
+}
+
+#pragma endregion
+
+#pragma region slow_print
+
+Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, ConsoleCoord pos, bool restore_cursor, int wAttributes) {
     ConsoleCoord old_pos = get_console_cur_pos();
     set_console_cur_pos(pos);
 
@@ -36,19 +54,36 @@ Console &Console::slow_print(const std::string &msg, DWORD sleep_ms, ConsoleCoor
         Sleep(sleep_ms);
     }
 
-    set_console_cur_pos(old_pos);
-
     set_console_text_attr(TextColorPreset::DEFAULT);
+
+    if (restore_cursor) {
+        set_console_cur_pos(old_pos);
+    }
     return *this;
 }
 
-Console &Console::slow_print(const std::string &msg, int wAttributes) {
-    return slow_print(msg, HIGH_SPEED, {-1, -1}, wAttributes);
+Console &Console::slow_print(const std::string &msg, int wAttributes, bool restore_cursor) {
+    return slow_print(msg, HIGH_SPEED, {-1, -1}, restore_cursor, wAttributes);
 }
 
-Console &Console::slow_print(const std::string &msg, ConsoleCoord pos) {
-    return slow_print(msg, HIGH_SPEED, pos);
+Console &Console::slow_print(const std::string &msg, ConsoleCoord pos, bool restore_cursor) {
+    return slow_print(msg, HIGH_SPEED, pos, restore_cursor);
 }
+
+
+Console &Console::slow_print_then(const std::string &msg, DWORD sleep_ms, ConsoleCoord pos, int wAttributes) {
+    return slow_print(msg, sleep_ms, pos, false, wAttributes);
+}
+Console &Console::slow_print_then(const std::string &msg, int wAttributes) {
+    return slow_print(msg, wAttributes, false);
+}
+Console &Console::slow_print_then(const std::string &msg, ConsoleCoord pos) {
+    return slow_print(msg, pos, false);
+}
+
+#pragma endregion
+
+#pragma region console_basic_func
 
 Console &Console::clear_screen() {
     COORD coord_screen = {0, 0};// home for the cursor
@@ -107,10 +142,10 @@ void Console::hide_console_cursor(HANDLE handle) {
 Console &Console::set_console_cur_pos(int x, int y) {
     COORD console_size = get_console_size();
 
-    //     FIXME!: 这里到底为啥错了？
+    //    logger.flog_msg_debug("Getting Console size: (%d, %d)\n", console_size.X, console_size.Y);
+
     if (x > console_size.X || y > console_size.Y || x < 0 || y < 0) {
-        // FIXME!: delete this
-        debug_print_coord(x, y, "Invalid pos");
+        debug_log_coord(x, y, "Invalid pos");
         return *this;
     }
     SetConsoleCursorPosition(std_output, COORD{(short) x, (short) y});
@@ -142,31 +177,11 @@ COORD Console::get_console_size() {
     return size;
 }
 
-void debug_print_console_info(HANDLE handle) {
-    DEBUG({
-        CONSOLE_SCREEN_BUFFER_INFOEX info;
-        GetConsoleScreenBufferInfoEx(handle, &info);
-        // FIXME:这里有异常，数据出现不可能状况
-        logger.flog_msg_debug("======debug_print_console_info======");
-        logger.flog_msg_debug("cbSize: %lu\n", info.cbSize);
-        logger.flog_msg_debug("dwSize: %d, %d\n", info.dwSize.X, info.dwSize.Y);
-        logger.flog_msg_debug("dwCursorPosition: %d, %d\n", info.dwCursorPosition.X, info.dwCursorPosition.Y);
-        logger.flog_msg_debug("wAttributes: %d\n", info.wAttributes);
-        logger.flog_msg_debug("srWindow: %d, %d, %d, %d\n", info.srWindow.Left, info.srWindow.Top, info.srWindow.Right, info.srWindow.Bottom);
-
-        logger.flog_msg_debug("dwMaximumWindowSize: %d, %d\n", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
-        logger.flog_msg_debug("wPopupAttributes: %d\n", info.wPopupAttributes);
-
-        logger.flog_msg_debug("bFullscreenSupported: %d\n", info.bFullscreenSupported);
-    });
-}
-
-// FIXME!: 获取的信息貌似不对,查看microsoft有无提供GetConsoleScreenBufferInfoEx的错误检测
 ConsoleCoord Console::get_console_cur_pos() {
-    CONSOLE_SCREEN_BUFFER_INFOEX info;
-    GetConsoleScreenBufferInfoEx(std_output, &info);
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(std_output, &info);
 
-    debug_print_console_info(std_output);
+    //    debug_log_console_info(std_output);
 
     return ConsoleCoord(info.dwCursorPosition);
 }
@@ -175,3 +190,8 @@ Console &Console::set_console_text_attr(int wAttributes) {
     SetConsoleTextAttribute(std_output, WORD(wAttributes));
     return *this;
 }
+const HANDLE &Console::get_std_output() const {
+    return std_output;
+}
+
+#pragma endregion

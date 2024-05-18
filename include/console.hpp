@@ -37,9 +37,9 @@ struct ConsoleCoord {
     int x, y;
 };
 
-void debug_print_coord(ConsoleCoord pos, const char *msg = "pos-info");
-void debug_print_coord(int X, int Y, const char *msg = "pos-info");
-void debug_print_console_info(HANDLE handle);
+void debug_log_coord(ConsoleCoord pos, const char *msg = "pos-info");
+void debug_log_coord(int X, int Y, const char *msg = "pos-info");
+void debug_log_console_info(HANDLE handle);
 
 class Console {
 public:
@@ -49,9 +49,13 @@ public:
     /**
         @brief: slow_print at Cursor on (x,y)
     */
-    Console &slow_print(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, ConsoleCoord pos = {-1, -1}, int wAttributes = TextColorPreset::DEFAULT);
-    Console &slow_print(const std::string &msg, int wAttributes);
-    Console &slow_print(const std::string &msg, ConsoleCoord pos);
+    Console &slow_print(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, ConsoleCoord pos = {-1, -1}, bool restore_cursor = true, int wAttributes = TextColorPreset::DEFAULT);
+    Console &slow_print(const std::string &msg, int wAttributes, bool restore_cursor = true);
+    Console &slow_print(const std::string &msg, ConsoleCoord pos, bool restore_cursor = true);
+
+    Console &slow_print_then(const std::string &msg, DWORD sleep_ms = HIGH_SPEED, ConsoleCoord pos = {-1, -1}, int wAttributes = TextColorPreset::DEFAULT);
+    Console &slow_print_then(const std::string &msg, int wAttributes);
+    Console &slow_print_then(const std::string &msg, ConsoleCoord pos);
 
     Console &clear_screen();
 
@@ -69,6 +73,8 @@ public:
     COORD get_console_size();
 
     ConsoleCoord get_console_cur_pos();
+
+    [[nodiscard]] const HANDLE &get_std_output() const;
 
 private:
     HANDLE std_output;

@@ -2,8 +2,8 @@
 #ifndef GLOBAL_DATA_MANAGER_HPP_
 #define GLOBAL_DATA_MANAGER_HPP_
 
-#include "game_setting.hpp"
-#include "player_data.hpp"
+#include "game_data/game_setting.hpp"
+#include "game_data/player_data.hpp"
 #include <rapidjson/document.h>
 #include <string>
 #include <vector>

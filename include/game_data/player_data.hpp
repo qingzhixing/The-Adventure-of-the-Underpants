@@ -2,8 +2,8 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 
-#include "../lib/include/rapidjson/document.h"
 #include "exportable_data.hpp"
+#include "rapidjson/document.h"
 #include <iostream>
 #include <string>
 
@@ -11,13 +11,13 @@ using std::string;
 
 class PlayerData : public ExportableData {
 public:
-    PlayerData(string player_name);
+    explicit PlayerData(string player_name);
     PlayerData();
 
 public:
     rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
     void import_data(const rapidjson::Value &object_data) override;
-    void print_data() const override;
+    void log_data() const override;
 
 public:
     void add_experience(int exp);
