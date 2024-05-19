@@ -8,7 +8,7 @@
 
 using namespace rapidjson;
 
-GlobalDataManager global;
+GlobalDataManager global = GlobalDataManager();
 
 const string GlobalDataManager::AUTHOR = "qingzhixing sama!";
 

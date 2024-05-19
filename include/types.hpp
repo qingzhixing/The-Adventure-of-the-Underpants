@@ -3,8 +3,5 @@
 #define TYPES_HPP_
 #include <Windows.h>
 
-DWORD operator"" _s(long double seconds) {
-    return u_int(seconds * 1000);
-}
-
+DWORD operator"" _s(long double seconds);
 #endif// !TYPES_HPP_

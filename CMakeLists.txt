@@ -16,7 +16,10 @@ add_executable(${PROJECT_NAME} ${SRC_LIST}
         source/logger.cpp
         include/logger.hpp
         source/file_controller.cpp
-        include/file_controller.hpp)
+        include/file_controller.hpp
+        include/game_controller.cpp
+        include/game_controller.hpp
+        source/types.cpp)
 
 # 添加头文件目录
 target_include_directories(${PROJECT_NAME} PRIVATE ./include)
