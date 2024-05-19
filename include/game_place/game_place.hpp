@@ -30,8 +30,8 @@ struct Selection {
         this->callback = callback;
     }
 
-    std::string selection_string() const {
-        return std::format("[%s] %s", keyboard_key, selection_name);
+    [[nodiscard]] std::string selection_string() const {
+        return std::format("[{0}] {1}", keyboard_key, selection_name);
     }
 };
 
@@ -49,7 +49,7 @@ public:
      * @brief display this place
      * @return true if displayed success, false otherwise
      */
-    virtual bool display() const {
+    [[nodiscard]] virtual bool display() const {
         logger.flog_msg_error("Called uncompleted func %s at {%s}\n", __func__, place_name.c_str());
         return false;
     }

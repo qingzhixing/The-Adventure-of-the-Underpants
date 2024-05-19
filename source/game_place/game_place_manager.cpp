@@ -10,18 +10,20 @@ extern Console console;
 
 bool GamePlaceManager::display_game_place() {
     const auto &place = get_player_pos_place();
-    logger.flog_msg_debug("player is at {%s}\n", place.place_name.c_str());
-    return place.display();
+
+    logger.flog_msg_debug("player is at {%s}\n", place->place_name.c_str());
+    return place->display();
 }
-const GamePlace &GamePlaceManager::get_player_pos_place() {
+
+const GamePlacePtr &GamePlaceManager::get_player_pos_place() {
     for (const auto &place: game_places) {
-        if (place.place_name == runtime_player_pos_place) {
+        if (place->place_name == runtime_player_pos_place) {
             return place;
         }
     }
     logger.flog_msg_error("Player is at an unknown place! {%s}\n", runtime_player_pos_place.c_str());
     const auto &new_place = game_places.front();
-    runtime_player_pos_place = new_place.place_name;
+    runtime_player_pos_place = new_place->place_name;
     return new_place;
 }
 void GamePlaceManager::handle_input() {
@@ -30,7 +32,7 @@ void GamePlaceManager::handle_input() {
         std::string input;
         getline(std::cin, input);
 
-        auto success = get_player_pos_place().handle_selection(input);
+        auto success = get_player_pos_place()->handle_selection(input);
 
         correct_input_flag = success;
 

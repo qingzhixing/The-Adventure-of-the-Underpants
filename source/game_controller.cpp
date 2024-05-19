@@ -92,8 +92,10 @@ inline static void not_first_enter() {
 }
 
 inline void game_place_manager_init() {
-    GamePlaceLobby lobby;
-    place_manager.game_places.push_back(lobby);
+    GamePlacePtr lobby(new GamePlaceLobby());
+    place_manager.runtime_player_pos_place = lobby->place_name;
+
+    place_manager.game_places.push_back(std::move(lobby));
 }
 
 void GameController::game_init() {
@@ -116,7 +118,7 @@ void GameController::game_init() {
 void GameController::game_update() {
     if (!place_manager.display_game_place()) {
         exit_game = true;
-        logger.flog_msg_fatal("Game Place Display Failed!!!!!");
+        logger.flog_msg_fatal("Game Place Display Failed!!!!!\n");
         console.set_console_cur_pos(0, 0);
         console.set_console_text_attr(TextColorPreset::INTENSITY_RED);
         for (int i = 1; i <= 10; i++) {

@@ -15,7 +15,7 @@ static void display_game_info(const GamePlace &place) {
     logger.flog_msg_debug("Previous place: %s", place.place_name.c_str());
     logger.flog_msg_debug("==== END %s ====\n", __FUNCTION__);
 
-    console.slow_print(std::format("Game Version: %s \n", GlobalDataManager::VERSION), {30, 20});
+    console.slow_print(std::format("Game Version: {} \n", GlobalDataManager::VERSION), {30, 20});
 }
 
 GamePlaceLobby::GamePlaceLobby() {
