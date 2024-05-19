@@ -20,17 +20,17 @@ Value GameSetting::export_data(rapidjson::Document::AllocatorType &allocator) co
 
 void GameSetting::log_data() const {
     logger.log_msg("==== Game Setting Data ====", LOG_LEVEL_INFO);
-    logger.flog_msg_info("first_enter: %s", first_enter ? "true" : "false");
-    logger.flog_msg_info("is_debug: %s", is_debug ? "true" : "false");
-    logger.flog_msg_info("skip_leading: %s", skip_leading ? "true" : "false");
+    logger.flog_msg_info("first_enter: %s", bool_2_string(first_enter));
+    logger.flog_msg_info("is_debug: %s", bool_2_string(is_debug));
+    logger.flog_msg_info("skip_leading: %s", bool_2_string(skip_leading));
     logger.log_msg("==== End Game Setting Data ====\n", LOG_LEVEL_INFO);
 }
 
 void GameSetting::import_data(const Value &object_data) {
-    DEBUG(printf("Importing game_setting\n"));
+    logger.flog_msg_info("Importing game_setting\n");
     PARSE_BOOL_VALUE(first_enter);
     PARSE_BOOL_VALUE(is_debug);
     PARSE_BOOL_VALUE(skip_leading);
 
-    DEBUG(printf("Importing game_setting done\n"));
+    logger.flog_msg_info("Importing game_setting done\n");
 }

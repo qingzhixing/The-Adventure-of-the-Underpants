@@ -1,10 +1,10 @@
-#include "global_data_manager.hpp"
+#include "game_data/global_data_manager.hpp"
 #include "file_controller.hpp"
 
+#include "rapidjson/error/en.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/prettywriter.h"
 #include <fstream>
-#include <rapidjson/error/en.h>
-#include <rapidjson/filewritestream.h>
-#include <rapidjson/prettywriter.h>
 
 using namespace rapidjson;
 
@@ -16,8 +16,6 @@ const string GlobalDataManager::VERSION = "0.0.1 - preview";
 
 const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
 
-
-#pragma region import_data
 
 /**
  * @brief Import data from json.
@@ -83,9 +81,6 @@ void GlobalDataManager::load_game_data() {
     }
 }
 
-#pragma endregion
-
-#pragma region save_data
 
 void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::AllocatorType &allocator) {
     Value game_info(kObjectType);
@@ -142,5 +137,3 @@ void GlobalDataManager::save_game_data() {
 
     fclose(file);
 }
-
-#pragma endregion

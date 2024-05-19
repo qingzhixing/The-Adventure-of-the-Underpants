@@ -7,19 +7,27 @@ project(underpants)
 set(CMAKE_CXX_STANDARD 20)
 
 # 添加可执行文件
-# set(SRC_LIST 
-#     ./source/main.cpp
-#     )
-aux_source_directory(./source/ SRC_LIST)
-aux_source_directory(./lib/source/ SRC_LIST)
-add_executable(${PROJECT_NAME} ${SRC_LIST}
+set(SRC_LIST
         source/logger.cpp
         include/logger.hpp
         source/file_controller.cpp
         include/file_controller.hpp
-        include/game_controller.cpp
+        source/game_controller.cpp
         include/game_controller.hpp
-        source/types.cpp)
+        source/types.cpp
+        source/game_place/game_place_lobby.cpp
+        include/game_place/game_place_lobby.hpp
+        source/game_place/game_place.cpp
+        include/game_place/game_place.hpp
+        source/game_place/game_place_manager.cpp
+        include/game_place/game_place_manager.hpp
+        source/game_data/game_setting.cpp
+        source/game_data/global_data_manager.cpp
+        source/game_data/player_data.cpp
+)
+aux_source_directory(./source/ SRC_LIST)
+aux_source_directory(./lib/source/ SRC_LIST)
+add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 # 添加头文件目录
 target_include_directories(${PROJECT_NAME} PRIVATE ./include)

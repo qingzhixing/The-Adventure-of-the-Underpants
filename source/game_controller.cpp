@@ -5,13 +5,17 @@
 #include "game_controller.hpp"
 #include "console.hpp"
 #include "game_data/game_setting.hpp"
+#include "game_data/global_data_manager.hpp"
 #include "game_data/player_data.hpp"
-#include "global_data_manager.hpp"
+#include "game_place/game_place_lobby.hpp"
+#include "game_place/game_place_manager.hpp"
 #include "types.hpp"
 
 static PlayerData &player = global.player_data;
 
 static GameSetting &setting = global.game_setting;
+
+static GamePlaceManager place_manager;
 
 extern Console console;
 
@@ -87,12 +91,17 @@ inline static void not_first_enter() {
     console.clear_screen();
 }
 
+inline void game_place_manager_init() {
+    GamePlaceLobby lobby;
+    place_manager.game_places.push_back(lobby);
+}
+
 void GameController::game_init() {
+    game_place_manager_init();
+
     global.load_game_data();
     player.log_data();
     setting.log_data();
-
-    console.clear_screen();
 
     if (setting.first_enter) {
         first_enter();
@@ -105,7 +114,18 @@ void GameController::game_init() {
 }
 
 void GameController::game_update() {
-    exit_game = true;
+    if (!place_manager.display_game_place()) {
+        exit_game = true;
+        logger.flog_msg_fatal("Game Place Display Failed!!!!!");
+        console.set_console_cur_pos(0, 0);
+        console.set_console_text_attr(TextColorPreset::INTENSITY_RED);
+        for (int i = 1; i <= 10; i++) {
+            printf("[PANIC]!!! Game Place Display Failed !!!\n");
+        }
+        Sleep(3.0_s);
+        return;
+    }
+    place_manager.handle_input();
 }
 
 void GameController::game_end() {
