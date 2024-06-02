@@ -14,7 +14,7 @@ public:
     static void game_end();
 
 public:
-    static GameController &getInstance();
+    static GameController &get_instance();
 
 private:
     // 声明，不分配空间

@@ -15,12 +15,6 @@ set(SRC_LIST
         source/game_controller.cpp
         include/game_controller.hpp
         source/types.cpp
-        source/game_place/game_place_lobby.cpp
-        include/game_place/game_place_lobby.hpp
-        source/game_place/game_place.cpp
-        include/game_place/game_place.hpp
-        source/game_place/game_place_manager.cpp
-        include/game_place/game_place_manager.hpp
         source/game_data/game_setting.cpp
         source/game_data/global_data_manager.cpp
         source/game_data/player_data.cpp
