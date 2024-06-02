@@ -9,3 +9,7 @@
   ![logger_src](./assets/imgs/logger_src-2024-5-16.png)
 - [x] 🖥️ Console类修复完成！现在有更好看的log! - 2024-5-18
   ![console fix better log](assets/imgs/Console_fixed-better_log-2024-5-18.png)
+- [x] 🐳 Into Lobby Successfully - 2024/06/2 21:37
+  ![lobby](./assets/imgs/lobby.png)
+  ![lobby_invalid_input](./assets/imgs/lobby_invalid_input.png)
+  ![lobby_game_info](./assets/imgs/lobby_game_info.png)

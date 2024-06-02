@@ -5,6 +5,7 @@
 #include "game_controller.hpp"
 #include "../game_data/game_setting.hpp"
 #include "../game_data/global_data_manager.hpp"
+#include "../game_place/lobby.hpp"
 #include "../utilities/types.hpp"
 #include "console.hpp"
 
@@ -26,7 +27,6 @@ namespace underpants {
         }
         return *instance;
     }
-
 
     inline static void first_enter() {
         /**
@@ -108,6 +108,7 @@ namespace underpants {
     }
 
     void GameController::game_update() {
+        Lobby::enter();
     }
 
     void GameController::game_end() {

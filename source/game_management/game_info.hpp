@@ -11,7 +11,7 @@ namespace underpants {
     class GameInfo {
     public:
         static constexpr auto author{"qingzhixing sama!"};
-        static constexpr auto version{"0.0.1 - Into Lobbying"};
+        static constexpr auto version{"0.0.1 - Into Lobby Successfully - 2024/06/2 21:37"};
     };
 }// namespace underpants
 
