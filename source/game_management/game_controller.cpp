@@ -3,9 +3,9 @@
 //
 
 #include "game_controller.hpp"
+#include "../game_data/game_setting.hpp"
+#include "../game_data/global_data_manager.hpp"
 #include "console.hpp"
-#include "game_data/game_setting.hpp"
-#include "game_data/global_data_manager.hpp"
 #include "types.hpp"
 
 namespace underpants {

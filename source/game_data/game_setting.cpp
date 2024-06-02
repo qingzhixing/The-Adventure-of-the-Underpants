@@ -1,4 +1,4 @@
-#include "game_data/game_setting.hpp"
+#include "game_setting.hpp"
 
 using namespace rapidjson;
 using namespace underpants;

@@ -1,5 +1,5 @@
-#include "game_data/global_data_manager.hpp"
-#include "file_controller.hpp"
+#include "global_data_manager.hpp"
+#include "../game_management/file_controller.hpp"
 
 #include "rapidjson/error/en.h"
 #include "rapidjson/filewritestream.h"

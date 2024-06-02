@@ -2,7 +2,7 @@
 #ifndef EXPORTABLE_DATA_HPP_
 #define EXPORTABLE_DATA_HPP_
 
-#include "logger.hpp"
+#include "../game_management/logger.hpp"
 #include "rapidjson/document.h"
 #include <iostream>
 #include <string>

@@ -1,5 +1,5 @@
 #include "main.hpp"
-#include "game_controller.hpp"
+#include "game_management/game_controller.hpp"
 using namespace underpants;
 
 

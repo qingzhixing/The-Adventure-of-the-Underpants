@@ -2,8 +2,8 @@
 #ifndef CONSOLE_HPP_
 #define CONSOLE_HPP_
 
-#include <Windows.h>
 #include <iostream>
+#include <windows.h>
 
 #define LOW_SPEED 50
 #define MID_SPEED 30

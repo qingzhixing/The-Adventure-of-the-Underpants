@@ -8,18 +8,18 @@ set(CMAKE_CXX_STANDARD 20)
 
 # 添加可执行文件
 set(SRC_LIST
-        source/logger.cpp
-        include/logger.hpp
-        source/file_controller.cpp
-        include/file_controller.hpp
-        source/game_controller.cpp
-        include/game_controller.hpp
-        source/types.cpp
+        source/game_management/logger.cpp
+        source/game_management/logger.hpp
+        source/game_management/file_controller.cpp
+        source/game_management/file_controller.hpp
+        source/game_management/game_controller.cpp
+        source/game_management/game_controller.hpp
+        source/game_management/types.cpp
         source/game_data/game_setting.cpp
         source/game_data/global_data_manager.cpp
         source/game_data/player_data.cpp
-        include/game_place/lobby.cpp
-        include/game_place/lobby.hpp
+        source/game_place/lobby.cpp
+        source/game_place/lobby.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)
