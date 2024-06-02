@@ -5,8 +5,8 @@
 #include <Windows.h>
 #include <iostream>
 
-#define LOW_SPEED 150
-#define MID_SPEED 80
+#define LOW_SPEED 50
+#define MID_SPEED 30
 #define HIGH_SPEED 20
 
 enum TextColorPreset : WORD {
@@ -59,7 +59,8 @@ public:
 
     Console &clear_screen();
 
-    static void hide_console_cursor(HANDLE handle);
+    static void set_cursor_visible(HANDLE handle, bool visible);
+    Console &enable_cursor_display(bool visible);
 
     /**
         @param x - horizontal pos

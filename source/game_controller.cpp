@@ -39,7 +39,7 @@ inline static void first_enter() {
     /**
         @brief: Introduction
     */
-    console.slow_print("Welcome to Underpants' World!", LOW_SPEED, {30, 8})
+    console.slow_print("Welcome to Underpants' World!", MID_SPEED, {30, 8})
             .slow_print("You are an UNDERPANTS, the resident of this world.", MID_SPEED, {25, 10})
             .slow_print("You are selected to gain the EVOLUTION.", MID_SPEED, {30, 12})
             .slow_print("Now! Start your adventure!", HIGH_SPEED, {30, 15});
@@ -51,13 +51,15 @@ inline static void first_enter() {
      */
 
     console.slow_print_then("Please enter your name: ", HIGH_SPEED, {30, 8})
-            .set_console_text_attr(TextColorPreset::INTENSITY_YELLOW);
+            .set_console_text_attr(TextColorPreset::INTENSITY_YELLOW)
+            .enable_cursor_display(true);
 
     /**
      * @brief read a line of name
      */
     std::getline(std::cin, player.name);
-    console.set_console_text_attr(TextColorPreset::DEFAULT);
+    console.set_console_text_attr(TextColorPreset::DEFAULT)
+            .enable_cursor_display(false);
 
     /**
      * @brief save data
@@ -69,6 +71,7 @@ inline static void first_enter() {
             .slow_print(" !");
     player.log_data();
     Sleep(1.5_s);
+    console.clear_screen();
 }
 
 inline static void not_first_enter() {

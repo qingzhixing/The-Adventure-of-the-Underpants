@@ -8,12 +8,7 @@ Console console;
 Console::Console() {
     std_output = GetStdHandle(STD_OUTPUT_HANDLE);
     set_console_cur_pos(0, 0);
-    // hide_console_cursor(std_output);
-    /*
-        UNICODE: 65001
-        GBK: 936
-    */
-    // SetConsoleOutputCP(936);
+    enable_cursor_display(false);
 }
 
 #pragma region console_debug
@@ -128,11 +123,17 @@ Console &Console::clear_screen() {
     return *this;
 }
 
-void Console::hide_console_cursor(HANDLE handle) {
-    CONSOLE_CURSOR_INFO new_cursor_info = {};
-    new_cursor_info.bVisible = 0;
+
+void Console::set_cursor_visible(HANDLE handle, bool visible) {
+    CONSOLE_CURSOR_INFO new_cursor_info{};
+    new_cursor_info.bVisible = visible;
     new_cursor_info.dwSize = 1;
     SetConsoleCursorInfo(handle, &new_cursor_info);
+}
+
+Console &Console::enable_cursor_display(bool visible) {
+    set_cursor_visible(std_output, visible);
+    return *this;
 }
 
 /**
