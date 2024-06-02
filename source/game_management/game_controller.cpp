@@ -5,8 +5,8 @@
 #include "game_controller.hpp"
 #include "../game_data/game_setting.hpp"
 #include "../game_data/global_data_manager.hpp"
+#include "../utilities/types.hpp"
 #include "console.hpp"
-#include "types.hpp"
 
 namespace underpants {
     static PlayerData &player = global.player_data;
@@ -91,11 +91,7 @@ namespace underpants {
         console.clear_screen();
     }
 
-    inline void game_place_manager_init() {
-    }
-
     void GameController::game_init() {
-        game_place_manager_init();
 
         global.load_game_data();
         player.log_data();

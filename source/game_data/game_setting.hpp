@@ -2,7 +2,7 @@
 #ifndef GAME_SETTING_HPP_
 #define GAME_SETTING_HPP_
 
-#include "../game_management/debug.hpp"
+#include "../utilities/debug.hpp"
 #include "exportable_data.hpp"
 
 #define SKIP_LEADING true

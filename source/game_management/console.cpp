@@ -1,6 +1,6 @@
 #include "console.hpp"
-#include "debug.hpp"
-#include "logger.hpp"
+#include "../utilities/debug.hpp"
+#include "../utilities/logger.hpp"
 #include <string>
 
 namespace underpants {

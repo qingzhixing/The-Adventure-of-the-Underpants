@@ -17,9 +17,6 @@ namespace underpants {
     std::ifstream file_ifstream(const std::string &file_name) noexcept(false);
     std::FILE *file_open(const std::string &file_name, const std::string &mode) noexcept(false);
     void create_file(const std::string &file_name);
-
-    class FileController {
-    };
 }// namespace underpants
 
 

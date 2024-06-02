@@ -8,6 +8,8 @@
 namespace underpants {
 
     class Lobby {
+    public:
+        static void enter();
     };
 
 }// namespace underpants

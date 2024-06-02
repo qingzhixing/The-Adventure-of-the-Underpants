@@ -30,12 +30,6 @@ namespace underpants {
         PlayerData player_data;
         GameSetting game_setting;
 
-    public:
-        /*
-        game_info:
-    */
-        const static string AUTHOR;
-        const static string VERSION;
 
     public:
         const static std::string &DATA_FILE;

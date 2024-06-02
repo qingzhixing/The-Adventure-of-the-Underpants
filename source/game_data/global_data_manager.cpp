@@ -1,6 +1,7 @@
 #include "global_data_manager.hpp"
-#include "../game_management/file_controller.hpp"
+#include "../utilities/file_controller.hpp"
 
+#include "../game_management/game_info.hpp"
 #include "rapidjson/error/en.h"
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
@@ -12,12 +13,7 @@ namespace underpants {
 
     GlobalDataManager global = GlobalDataManager();
 
-    const string GlobalDataManager::AUTHOR = "qingzhixing sama!";
-
-    const string GlobalDataManager::VERSION = "0.0.1 - preview";
-
     const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
-
 
     /**
  * @brief Import data from json.
@@ -86,8 +82,8 @@ namespace underpants {
 
     void GlobalDataManager::add_game_info(Document &doc, rapidjson::Document::AllocatorType &allocator) {
         Value game_info(kObjectType);
-        game_info.AddMember("author", Value().SetString(AUTHOR.c_str(), AUTHOR.length(), allocator), allocator);
-        game_info.AddMember("version", Value().SetString(VERSION.c_str(), VERSION.length(), allocator), allocator);
+        game_info.AddMember("author", Value().SetString(GameInfo::author, strlen(GameInfo::author), allocator), allocator);
+        game_info.AddMember("version", Value().SetString(GameInfo::version, strlen(GameInfo::version), allocator), allocator);
         doc.AddMember("game_info", game_info, allocator);
     }
 

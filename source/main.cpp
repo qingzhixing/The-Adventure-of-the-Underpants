@@ -1,5 +1,6 @@
 #include "main.hpp"
 #include "game_management/game_controller.hpp"
+#include "game_management/game_info.hpp"
 using namespace underpants;
 
 
@@ -16,7 +17,7 @@ void handle_args(int argc, const char **argv) {
             printf("  -v, --version  Show version information and exit\n");
             exit(0);
         } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
-            printf("Underpants' World v1.0\n");
+            printf("Underpants! %s made by @%s", GameInfo::version, GameInfo::author);
             exit(0);
         } else {
             printf("Unknown option: %s\n", argv[i]);

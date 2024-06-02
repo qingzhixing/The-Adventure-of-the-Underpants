@@ -1,6 +1,6 @@
 #include "player_data.hpp"
 
-#include "../game_management/debug.hpp"
+#include "../utilities/debug.hpp"
 #include <utility>
 
 using namespace rapidjson;
