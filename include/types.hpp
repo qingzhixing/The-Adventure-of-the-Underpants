@@ -3,5 +3,7 @@
 #define TYPES_HPP_
 #include <Windows.h>
 
-DWORD operator"" _s(long double seconds);
+namespace underpants {
+    DWORD operator"" _s(long double seconds);
+}
 #endif// !TYPES_HPP_

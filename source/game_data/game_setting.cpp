@@ -1,7 +1,7 @@
 #include "game_data/game_setting.hpp"
 
-#include <iostream>
 using namespace rapidjson;
+using namespace underpants;
 
 GameSetting::GameSetting() : ExportableData("game_setting") {}
 

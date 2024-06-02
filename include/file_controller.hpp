@@ -10,15 +10,17 @@
 #include <fstream>
 #include <string>
 
-std::string get_exe_dir();
-std::string get_file_content(const std::string &file_name);
-std::ofstream file_ofstream(const std::string &file_name) noexcept(false);
-std::ifstream file_ifstream(const std::string &file_name) noexcept(false);
-std::FILE *file_open(const std::string &file_name, const std::string &mode) noexcept(false);
-void create_file(const std::string &file_name);
+namespace underpants {
+    std::string get_exe_dir();
+    std::string get_file_content(const std::string &file_name);
+    std::ofstream file_ofstream(const std::string &file_name) noexcept(false);
+    std::ifstream file_ifstream(const std::string &file_name) noexcept(false);
+    std::FILE *file_open(const std::string &file_name, const std::string &mode) noexcept(false);
+    void create_file(const std::string &file_name);
 
-class FileController {
-};
+    class FileController {
+    };
+}// namespace underpants
 
 
 #endif//UNDERPANTS_FILE_CONTROLLER_HPP

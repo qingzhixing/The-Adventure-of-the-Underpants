@@ -3,7 +3,8 @@
 //
 
 #include "types.hpp"
-
-DWORD operator"" _s(long double seconds) {
-    return u_int(seconds * 1000);
-}
+namespace underpants {
+    DWORD operator"" _s(long double seconds) {
+        return u_int(seconds * 1000);
+    }
+}// namespace underpants

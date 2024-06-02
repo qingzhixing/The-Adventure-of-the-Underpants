@@ -18,6 +18,8 @@ set(SRC_LIST
         source/game_data/game_setting.cpp
         source/game_data/global_data_manager.cpp
         source/game_data/player_data.cpp
+        include/game_place/lobby.cpp
+        include/game_place/lobby.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)

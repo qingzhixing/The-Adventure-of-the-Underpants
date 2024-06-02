@@ -7,19 +7,22 @@
 
 #define SKIP_LEADING true
 
-class GameSetting : public ExportableData {
-public:
-    GameSetting();
+namespace underpants {
 
-public:
-    rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
-    void import_data(const rapidjson::Value &object_data) override;
-    void log_data() const override;
+    class GameSetting : public ExportableData {
+    public:
+        GameSetting();
 
-public:
-    bool first_enter = true;
-    bool is_debug = DEBUG_ENABLED;
-    bool skip_leading = SKIP_LEADING;
-};
+    public:
+        rapidjson::Value export_data(rapidjson::Document::AllocatorType &allocator) const override;
+        void import_data(const rapidjson::Value &object_data) override;
+        void log_data() const override;
+
+    public:
+        bool first_enter = true;
+        bool is_debug = DEBUG_ENABLED;
+        bool skip_leading = SKIP_LEADING;
+    };
+}// namespace underpants
 
 #endif// !GAME_SETTING_HPP_

@@ -1,7 +1,7 @@
 #include "main.hpp"
 #include "game_controller.hpp"
+using namespace underpants;
 
-extern Console console;
 
 inline static void init() {
     GameController::game_init();
