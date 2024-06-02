@@ -30,13 +30,13 @@ void debug_log_coord(int X, int Y, const char *msg) {
 void debug_log_console_info(HANDLE handle) {
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(handle, &info);
-    logger.log_msg("==== CONSOLE_SCREEN_BUFFER_INFO ====", LOG_LEVEL_INFO);
+    logger.log_msg("==== CONSOLE_SCREEN_BUFFER_INFO ====", LogLevel::LOG_INFO);
     logger.flog_msg_info("Console size: (%d, %d)", info.srWindow.Right - info.srWindow.Left + 1, info.srWindow.Bottom - info.srWindow.Top + 1);
     logger.flog_msg_info("Console cursor pos: (%d, %d)", info.dwCursorPosition.X, info.dwCursorPosition.Y);
     logger.flog_msg_info("Console text attr: %d", info.wAttributes);
     logger.flog_msg_info("Console dwSize: (%d, %d)", info.dwSize.X, info.dwSize.Y);
     logger.flog_msg_info("Console dwMaximumWindowSize: (%d, %d)", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
-    logger.log_msg("==== END CONSOLE_SCREEN_BUFFER_INFO ====\n", LOG_LEVEL_INFO);
+    logger.log_msg("==== END CONSOLE_SCREEN_BUFFER_INFO ====\n", LogLevel::LOG_INFO);
 }
 
 #pragma endregion

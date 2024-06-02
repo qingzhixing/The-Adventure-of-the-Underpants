@@ -19,11 +19,11 @@ Value GameSetting::export_data(rapidjson::Document::AllocatorType &allocator) co
 }
 
 void GameSetting::log_data() const {
-    logger.log_msg("==== Game Setting Data ====", LOG_LEVEL_INFO);
+    logger.log_msg("==== Game Setting Data ====", LogLevel::LOG_INFO);
     logger.flog_msg_info("first_enter: %s", bool_2_string(first_enter));
     logger.flog_msg_info("is_debug: %s", bool_2_string(is_debug));
     logger.flog_msg_info("skip_leading: %s", bool_2_string(skip_leading));
-    logger.log_msg("==== End Game Setting Data ====\n", LOG_LEVEL_INFO);
+    logger.log_msg("==== End Game Setting Data ====\n", LogLevel::LOG_INFO);
 }
 
 void GameSetting::import_data(const Value &object_data) {

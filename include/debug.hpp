@@ -24,7 +24,7 @@
     }
 #else
 #define DEBUG_ENABLED false
-#define DEBUG(CodeSegment) ((void) 0)
+#define LOG_DEBUG(CodeSegment) ((void) 0)
 #define JUDGE(CONDITION) ((void) 0)
 #define ASSERT(CONDITION) ((void) 0)
 #endif

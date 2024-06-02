@@ -9,7 +9,7 @@
 #define MID_SPEED 80
 #define HIGH_SPEED 20
 
-enum TextColorPreset {
+enum TextColorPreset : WORD {
     INTENSITY = FOREGROUND_INTENSITY,// 增强
     BLACK = 0,
     BLUE = FOREGROUND_BLUE,

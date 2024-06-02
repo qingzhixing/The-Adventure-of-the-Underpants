@@ -9,12 +9,12 @@
 #include <iostream>
 #include <string>
 
-enum LogLevel {
-    LOG_LEVEL_DEBUG,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARN,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_FATAL
+enum class LogLevel : short {
+    LOG_DEBUG,
+    LOG_INFO,
+    LOG_WARN,
+    LOG_ERROR,
+    LOG_FATAL
 };
 
 std::string log_level_string(LogLevel level);
@@ -31,10 +31,10 @@ public:
         : log_level(level) {
         set_logger_file(DEFAULT_LOG_FILE);
     }
-    Logger() : Logger(LOG_LEVEL_DEBUG) {}
+    Logger() : Logger(LogLevel::LOG_DEBUG) {}
 
 public:
-    void log_msg(const std::string &msg, LogLevel level = LOG_LEVEL_DEBUG);
+    void log_msg(const std::string &msg, LogLevel level = LogLevel::LOG_DEBUG);
     void flog_msg_debug(const char *_format, ...);
     void flog_msg_info(const char *_format, ...);
     void flog_msg_warn(const char *_format, ...);

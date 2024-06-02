@@ -28,7 +28,7 @@ void handle_args(int argc, const char **argv) {
 int main(int argc, const char **argv) {
     handle_args(argc, argv);
     printf("Hello, Underpants!\n");
-    logger.log_msg("Hello, Underpants!", LOG_LEVEL_DEBUG);
+    logger.log_msg("Hello, Underpants!", LogLevel::LOG_DEBUG);
     console.clear_screen();
 
     init();

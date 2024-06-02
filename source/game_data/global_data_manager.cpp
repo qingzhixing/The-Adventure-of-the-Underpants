@@ -22,21 +22,21 @@ const std::string &GlobalDataManager::DATA_FILE = "game_data.json";
  * @param value - root of parsing data
  */
 void GlobalDataManager::parse_game_data(rapidjson::Value &value) {
-    logger.log_msg("Parsing global game data.\n", LOG_LEVEL_DEBUG);
+    logger.log_msg("Parsing global game data.\n", LogLevel::LOG_DEBUG);
 
     const char *player_data_name = player_data.json_key_name.c_str();
 
     if (value.HasMember(player_data_name)) {
         player_data.import_data(value[player_data_name]);
     } else {
-        logger.log_msg("Missing player_data object\n", LOG_LEVEL_WARN);
+        logger.log_msg("Missing player_data object\n", LogLevel::LOG_WARN);
     }
 
     const char *game_setting_name = game_setting.json_key_name.c_str();
     if (value.HasMember(game_setting_name)) {
         game_setting.import_data(value[game_setting_name]);
     } else {
-        logger.log_msg("Missing game_setting object\n", LOG_LEVEL_WARN);
+        logger.log_msg("Missing game_setting object\n", LogLevel::LOG_WARN);
     }
 }
 
@@ -121,8 +121,8 @@ void GlobalDataManager::save_game_data() {
     try {
         file = file_open(DATA_FILE, "w");
     } catch (std::exception &e) {
-        logger.log_msg(e.what(), LOG_LEVEL_ERROR);
-        logger.log_msg("Failed to save game data.", LOG_LEVEL_ERROR);
+        logger.log_msg(e.what(), LogLevel::LOG_ERROR);
+        logger.log_msg("Failed to save game data.", LogLevel::LOG_ERROR);
         return;
     }
 

@@ -7,14 +7,14 @@
 #include <chrono>
 #include <cstdarg>
 
-Logger logger(LOG_LEVEL_DEBUG);
+Logger logger(LogLevel::LOG_DEBUG);
 
 extern std::string log_level_string(LogLevel level) {
-    if (level == LogLevel::LOG_LEVEL_DEBUG) return "DEBUG";
-    if (level == LogLevel::LOG_LEVEL_INFO) return "INFO";
-    if (level == LogLevel::LOG_LEVEL_WARN) return "WARN";
-    if (level == LogLevel::LOG_LEVEL_ERROR) return "ERROR";
-    if (level == LogLevel::LOG_LEVEL_FATAL) return "FATAL";
+    if (level == LogLevel::LOG_DEBUG) return "LOG_DEBUG";
+    if (level == LogLevel::LOG_INFO) return "LOG_INFO";
+    if (level == LogLevel::LOG_WARN) return "LOG_WARN";
+    if (level == LogLevel::LOG_ERROR) return "LOG_ERROR";
+    if (level == LogLevel::LOG_FATAL) return "LOG_FATAL";
 
     return "UNKNOWN";
 }
@@ -35,7 +35,7 @@ bool Logger::set_logger_file(const std::string &file_name) {
         create_file(file_name);
         log_file_stream = file_ofstream(file_name);
     } catch (std::exception &e) {
-        printf("[ERROR!] %s logger file open failed: %s\n", get_formated_time().c_str(), e.what());
+        printf("[LOG_ERROR!] %s logger file open failed: %s\n", get_formated_time().c_str(), e.what());
         return false;
     }
     return true;
@@ -59,7 +59,7 @@ void Logger::flog_msg_debug(const char *_format, ...) {
     va_start(args, _format);
     msg = formatted_string(_format, args);
     va_end(args);
-    log_msg(msg, LogLevel::LOG_LEVEL_DEBUG);
+    log_msg(msg, LogLevel::LOG_DEBUG);
 }
 void Logger::flog_msg_info(const char *_format, ...) {
     std::string msg;
@@ -67,7 +67,7 @@ void Logger::flog_msg_info(const char *_format, ...) {
     va_start(args, _format);
     msg = formatted_string(_format, args);
     va_end(args);
-    log_msg(msg, LogLevel::LOG_LEVEL_INFO);
+    log_msg(msg, LogLevel::LOG_INFO);
 }
 void Logger::flog_msg_warn(const char *_format, ...) {
     std::string msg;
@@ -75,7 +75,7 @@ void Logger::flog_msg_warn(const char *_format, ...) {
     va_start(args, _format);
     msg = formatted_string(_format, args);
     va_end(args);
-    log_msg(msg, LogLevel::LOG_LEVEL_WARN);
+    log_msg(msg, LogLevel::LOG_WARN);
 }
 void Logger::flog_msg_error(const char *_format, ...) {
     std::string msg;
@@ -83,7 +83,7 @@ void Logger::flog_msg_error(const char *_format, ...) {
     va_start(args, _format);
     msg = formatted_string(_format, args);
     va_end(args);
-    log_msg(msg, LogLevel::LOG_LEVEL_ERROR);
+    log_msg(msg, LogLevel::LOG_ERROR);
 }
 void Logger::flog_msg_fatal(const char *_format, ...) {
     std::string msg;
@@ -91,7 +91,7 @@ void Logger::flog_msg_fatal(const char *_format, ...) {
     va_start(args, _format);
     msg = formatted_string(_format, args);
     va_end(args);
-    log_msg(msg, LogLevel::LOG_LEVEL_FATAL);
+    log_msg(msg, LogLevel::LOG_FATAL);
 }
 
 std::string get_formated_time() {
