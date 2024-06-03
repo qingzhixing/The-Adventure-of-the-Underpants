@@ -35,7 +35,7 @@ namespace underpants {
         [[nodiscard]] int get_place_id() const;
 
     public:
-        virtual void enter(const AbstractPlace *const last_place) = 0;
+        virtual void enter(const AbstractPlace *last_place) = 0;
 
         /**
          *

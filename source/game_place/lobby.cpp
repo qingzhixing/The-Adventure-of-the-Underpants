@@ -19,22 +19,23 @@ namespace underpants {
             return false;
         }
 
-        const int basic_x = 10;
+        const int basic_x = 30;
 
         console.clear_screen();
 
-        ConsoleCoord cursor_pos = {30, basic_x};
+        ConsoleCoord cursor_pos = {basic_x, 10};
 
         console.slow_print("-> " + place_name + " <-", 0, cursor_pos, true, INTENSITY_CYAN);
         cursor_pos.y += 2;
-        console.slow_print("======== Selections ========", 0, cursor_pos);
+        console.slow_print("======== Selections Start ========", 0, cursor_pos);
         cursor_pos.y += 2;
 
         // display selections for shading
 
         int counter = 0;
-        int focus_on_selection = 0;
-        for (auto &selection: selection_list) {
+        static int focus_on_selection = 0;
+        for (unsigned long long index = 0; index < selection_list.size(); index++) {
+            auto selection = selection_list[index];
             counter++;
 
             if (counter >= 4) {
@@ -44,47 +45,71 @@ namespace underpants {
             }
 
             int color_attr = TextColorPreset::DEFAULT;
-            if (focus_on_selection == selection.get_selection_id()) {
-                color_attr = TextColorPreset::YELLOW | background_color(TextColorPreset::GREY);
+            if (focus_on_selection == index) {
+                color_attr = TextColorPreset::INTENSITY_YELLOW | background_color(TextColorPreset::GREY);
             }
 
             console.slow_print(selection.get_display_name(), 0, cursor_pos, true, color_attr);
 
-            cursor_pos.x += 4;
+            cursor_pos.x += int(selection.get_display_name().length() + 4);
         }
+
+        cursor_pos.y += 2;
+        cursor_pos.x = basic_x;
+        console.slow_print("======== Selections End ========", 0, cursor_pos);
 
         // waiting for input
 
         bool input_success = false;
         bool select_success = false;
         while (!input_success) {
-            if (!_kbhit()) {
+            if (!_kbhit()) continue;
 
-                Sleep(10);
-                continue;
-            }
+            /*
+             * 获得上下左右键的键值时候，他们是双键值，会返回高八位和低八位的int型数值
+             * 下键： key1=224，key2=80；
+             * 左键： key1=224，key2=75；
+             * 右键： key1=224，key2=77;
+             * */
+
             const int key_code = _getch();
 
-            // Right Arrow
-            if (key_code == 39) {
-                input_success = true;
-                focus_on_selection++;
+            logger.flog_msg_debug(
+                    "Lobby::display_input_loop() - key_code: %d\n",
+                    key_code);
+
+            if (key_code == 224) {
+                logger.log_msg("Getting next_key_code...\n");
+                const int next_key_code = _getch();
+                logger.flog_msg_debug("next_key_code: %d\n", next_key_code);
+
+                // Right Arrow
+                if (next_key_code == 77) {
+                    input_success = true;
+                    focus_on_selection++;
+                    logger.flog_msg_debug("Right Arrow Detected.\n");
+                }
+
+                // Left Arrow
+                if (next_key_code == 75) {
+                    input_success = true;
+                    focus_on_selection--;
+                    logger.flog_msg_debug("Left Arrow Detected.\n");
+                }
             }
 
-            // Left Arrow
-            if (key_code == 37) {
-                input_success = true;
-                focus_on_selection--;
-            }
 
             // Enter
             if (key_code == 13) {
                 input_success = true;
                 select_success = true;
+                logger.flog_msg_debug("Enter Detected.\n");
             }
 
             focus_on_selection = focus_on_selection < 0 ? int(selection_list.size() - 1) : focus_on_selection;
             focus_on_selection = focus_on_selection >= int(selection_list.size()) ? 0 : focus_on_selection;
+
+            logger.flog_msg_debug("focus_on_selection: %d\n", focus_on_selection);
         }//Lobby::display_input_loop()
 
         if (select_success) {

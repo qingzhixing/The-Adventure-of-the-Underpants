@@ -13,7 +13,7 @@ namespace underpants {
         Lobby();
 
     public:
-        void enter(const AbstractPlace *const last_place) override;
+        void enter(const AbstractPlace *last_place) override;
 
     private:
         /**
