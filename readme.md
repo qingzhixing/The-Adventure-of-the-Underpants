@@ -14,3 +14,6 @@
 [//]: # (  ![lobby]&#40;./assets/imgs/lobby.png&#41;)
 ![lobby_invalid_input](./assets/imgs/lobby_invalid_input.png)
 ![lobby_game_info](./assets/imgs/lobby_game_info.png)
+
+- [x] ⌨️ Keyboard_Selection! 2024/6/3 23:57
+  ![Keyboard_Selection](./assets/imgs/Keyboard_Selection.png)

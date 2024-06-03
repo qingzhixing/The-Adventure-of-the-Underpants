@@ -11,7 +11,7 @@ namespace underpants {
     class GameInfo {
     public:
         static constexpr auto author{"qingzhixing sama!"};
-        static constexpr auto version{"0.0.2 - Refactoring Places."};
+        static constexpr auto version{"0.0.3 - Underpants - Keyboard Selection 2024.6.3"};
     };
 }// namespace underpants
 
