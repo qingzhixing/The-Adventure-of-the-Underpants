@@ -108,7 +108,7 @@ namespace underpants {
     }
 
     void GameController::game_update() {
-        Lobby::enter();
+        Lobby().enter(nullptr);
     }
 
     void GameController::game_end() {

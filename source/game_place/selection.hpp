@@ -7,7 +7,7 @@
 #include <string>
 
 namespace underpants {
-    typedef void (*SelectionCallback)(int selection_id);
+    typedef void (*SelectionCallback)(int source_id);
 
     class Selection {
     public:

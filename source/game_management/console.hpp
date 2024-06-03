@@ -31,6 +31,8 @@ namespace underpants {
         DEFAULT = WHITE,
     };
 
+    WORD background_color(TextColorPreset color);
+
     struct ConsoleCoord {
         explicit ConsoleCoord(COORD coord) { x = coord.X, y = coord.Y; }
         ConsoleCoord(int X, int Y) : x(X), y(Y) {}

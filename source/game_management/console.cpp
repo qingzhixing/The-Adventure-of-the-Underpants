@@ -34,6 +34,9 @@ namespace underpants {
         logger.flog_msg_info("Console dwMaximumWindowSize: (%d, %d)", info.dwMaximumWindowSize.X, info.dwMaximumWindowSize.Y);
         logger.log_msg("==== END CONSOLE_SCREEN_BUFFER_INFO ====\n", LogLevel::LOG_INFO);
     }
+    WORD background_color(TextColorPreset color) {
+        return static_cast<WORD>(color) << 4;
+    }
 
 #pragma endregion
 

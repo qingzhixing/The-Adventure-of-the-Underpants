@@ -10,6 +10,7 @@ namespace underpants {
     AbstractPlace::AbstractPlace(const std::string &place_name, const std::string &description) {
         this->place_name = place_name;
         this->description = description;
+        place_id = generate_new_place_id();
     }
 
     AbstractPlace::AbstractPlace(const AbstractPlace &other) {
@@ -18,6 +19,7 @@ namespace underpants {
         place_changed = false;
         next_place = nullptr;
         selection_list.assign(other.selection_list.begin(), other.selection_list.end());
+        place_id = generate_new_place_id();
     }
 
     AbstractPlace::AbstractPlace(AbstractPlace &&other) noexcept {
@@ -26,6 +28,7 @@ namespace underpants {
         place_changed = false;
         next_place = nullptr;
         selection_list.swap(other.selection_list);
+        place_id = other.get_place_id();
     }
 
     AbstractPlace &AbstractPlace::operator=(const AbstractPlace &other) {
@@ -33,6 +36,7 @@ namespace underpants {
         place_name = other.place_name;
         description = other.description;
         place_changed = false;
+        place_id = generate_new_place_id();
         return *this;
     }
 
@@ -40,12 +44,18 @@ namespace underpants {
         place_name = std::move(other.place_name);
         description = std::move(other.description);
         place_changed = false;
+        place_id = other.get_place_id();
         return *this;
     }
 
     void AbstractPlace::goto_place(const AbstractPlace &place) {
         next_place.reset(&place);
         place_changed = true;
+    }
+
+    int AbstractPlace::generate_new_place_id() {
+        static int place_id_counter = 0;
+        return place_id_counter++;
     }
 
     const std::string &AbstractPlace::get_place_name() const {
@@ -75,5 +85,8 @@ namespace underpants {
     }
     void AbstractPlace::set_next_place(const AbstractPlace &place) {
         next_place.reset(&place);
+    }
+    int AbstractPlace::get_place_id() const {
+        return place_id;
     }
 }// namespace underpants

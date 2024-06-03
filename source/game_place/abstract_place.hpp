@@ -32,9 +32,10 @@ namespace underpants {
         void set_next_place(const AbstractPlace &place);
         [[nodiscard]] std::shared_ptr<AbstractPlace const> get_next_place() const;
         void set_place_changed(bool changed);
+        [[nodiscard]] int get_place_id() const;
 
     public:
-        virtual void enter(const AbstractPlace &last_place) = 0;
+        virtual void enter(const AbstractPlace *const last_place) = 0;
 
         /**
          *
@@ -43,8 +44,10 @@ namespace underpants {
          * @note 与PlaceManager通信，基于place_changed改变和get_next_place().
          */
         void goto_place(const AbstractPlace &place);
+        static int generate_new_place_id();
 
-    private:
+    protected:
+        int place_id;
         std::string place_name;
         std::string description;
         std::vector<Selection> selection_list = {};
