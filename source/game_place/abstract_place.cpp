@@ -44,7 +44,7 @@ namespace underpants {
     }
 
     void AbstractPlace::goto_place(const AbstractPlace &place) {
-        next_place = &place;
+        next_place.reset(&place);
         place_changed = true;
     }
 
@@ -73,7 +73,7 @@ namespace underpants {
     std::shared_ptr<AbstractPlace const> AbstractPlace::get_next_place() const {
         return next_place;
     }
-    void AbstractPlace::set_next_place(const std::shared_ptr<AbstractPlace const> &place) {
-        next_place = place;
+    void AbstractPlace::set_next_place(const AbstractPlace &place) {
+        next_place.reset(&place);
     }
 }// namespace underpants

@@ -13,12 +13,14 @@ namespace underpants {
 
     class AbstractPlace {
     public:
-        // constructors
+        // constructors & destructor
         AbstractPlace(const std::string &place_name, const std::string &description);
         AbstractPlace(const AbstractPlace &other);
         AbstractPlace(AbstractPlace &&other) noexcept;
         AbstractPlace &operator=(const AbstractPlace &other);
         AbstractPlace &operator=(AbstractPlace &&other) noexcept;
+
+        virtual ~AbstractPlace() = default;
 
     public:
         // getter & setter
@@ -27,7 +29,7 @@ namespace underpants {
         [[nodiscard]] bool is_place_changed() const;
         [[nodiscard]] const std::string &get_description() const;
         void set_description(const std::string &_description);
-        void set_next_place(const std::shared_ptr<AbstractPlace const> &place);
+        void set_next_place(const AbstractPlace &place);
         [[nodiscard]] std::shared_ptr<AbstractPlace const> get_next_place() const;
         void set_place_changed(bool changed);
 
