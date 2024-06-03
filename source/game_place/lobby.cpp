@@ -46,7 +46,7 @@ namespace underpants {
 
             int color_attr = TextColorPreset::DEFAULT;
             if (focus_on_selection == index) {
-                color_attr = TextColorPreset::INTENSITY_YELLOW | background_color(TextColorPreset::GREY);
+                color_attr = TextColorPreset::INTENSITY_MAGENTA | background_color(TextColorPreset::WHITE);
             }
 
             console.slow_print(selection.get_display_name(), 0, cursor_pos, true, color_attr);
@@ -59,6 +59,11 @@ namespace underpants {
         console.slow_print("======== Selections End ========", 0, cursor_pos);
 
         // waiting for input
+
+        //        FlushConsoleInputBuffer(console.get_std_output());
+        while (_kbhit()) {
+            _getch();
+        }
 
         bool input_success = false;
         bool select_success = false;
