@@ -5,11 +5,12 @@
 #ifndef UNDERPANTS_LOBBY_HPP
 #define UNDERPANTS_LOBBY_HPP
 
+#include "abstract_place.hpp"
 namespace underpants {
 
-    class Lobby {
+    class Lobby : AbstractPlace {
     public:
-        static void enter();
+        virtual void enter();
     };
 
 }// namespace underpants

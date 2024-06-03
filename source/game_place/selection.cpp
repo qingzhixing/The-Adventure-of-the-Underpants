@@ -10,14 +10,14 @@ namespace underpants {
         this->display_name = display_name;
         this->description = description;
         this->callback = callback;
-        selection_id = generate_selection_id();
+        selection_id = generate_new_selection_id();
     }
 
     Selection::Selection(const Selection &selection) {
         display_name = selection.display_name;
         description = selection.description;
         callback = selection.callback;
-        selection_id = generate_selection_id();
+        selection_id = generate_new_selection_id();
     }
 
     Selection::Selection(Selection &&selection) noexcept {
@@ -27,7 +27,23 @@ namespace underpants {
         selection_id = selection.get_selection_id();
     }
 
-    int Selection::generate_selection_id() {
+    Selection &Selection::operator=(const Selection &selection) {
+        display_name = selection.display_name;
+        description = selection.description;
+        callback = selection.callback;
+        selection_id = generate_new_selection_id();
+        return *this;
+    }
+
+    Selection &Selection::operator=(Selection &&selection) noexcept {
+        display_name = std::move(selection.display_name);
+        description = std::move(selection.description);
+        callback = selection.callback;
+        selection_id = selection.get_selection_id();
+        return *this;
+    }
+
+    int Selection::generate_new_selection_id() {
         static int id_counter = 0;
         return id_counter++;
     }

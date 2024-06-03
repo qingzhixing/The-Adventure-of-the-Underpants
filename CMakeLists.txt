@@ -27,6 +27,8 @@ set(SRC_LIST
         source/game_management/game_info.hpp
         source/game_place/selection.cpp
         source/game_place/selection.hpp
+        source/game_place/abstract_place.cpp
+        source/game_place/abstract_place.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)

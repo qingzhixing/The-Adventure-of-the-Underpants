@@ -14,6 +14,8 @@ namespace underpants {
         Selection(const std::string &display_name, SelectionCallback callback, const std::string &description);
         Selection(const Selection &selection);
         Selection(Selection &&selection) noexcept;
+        Selection &operator=(const Selection &selection);
+        Selection &operator=(Selection &&selection) noexcept;
 
     public:
         [[nodiscard]] const std::string &get_display_name() const;
@@ -24,7 +26,7 @@ namespace underpants {
         [[nodiscard]] SelectionCallback get_callback() const;
 
     private:
-        static int generate_selection_id();
+        static int generate_new_selection_id();
 
     private:
         int selection_id;
