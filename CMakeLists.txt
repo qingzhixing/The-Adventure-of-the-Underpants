@@ -25,6 +25,8 @@ set(SRC_LIST
         source/utilities/string_util.hpp
         source/game_management/game_info.cpp
         source/game_management/game_info.hpp
+        source/game_place/selection.cpp
+        source/game_place/selection.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)

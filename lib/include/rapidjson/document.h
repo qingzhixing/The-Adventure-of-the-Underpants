@@ -114,7 +114,7 @@ class GenericDocument;
 /*!
     This class was internal to GenericValue. It used to be a inner struct.
     But a compiler (IBM XL C/C++ for AIX) have reported to have problem with that so it moved as a namespace scope struct.
-    https://code.google.com/p/rapidjson/issues/detail?id=64
+    https://code.google.com/p/rapidjson/issues/detail?selection_id=64
 */
 template<typename Encoding, typename Allocator>
 class GenericMember {
@@ -1302,12 +1302,12 @@ public:
             __declspec(thread) static char buffer[sizeof(GenericValue)];
             return *new (buffer) GenericValue();
 #elif defined(__GNUC__) || defined(__clang__)
-                // This will generate -Wexit-time-destructors in clang, but that's
+                        // This will generate -Wexit-time-destructors in clang, but that's
                 // better than having under-alignment.
                 __thread static GenericValue buffer;
                 return buffer;
 #else
-                // Don't know what compiler this is, so don't know how to ensure
+                        // Don't know what compiler this is, so don't know how to ensure
                 // thread-locality.
                 static GenericValue buffer;
                 return buffer;
