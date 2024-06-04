@@ -64,6 +64,8 @@ namespace underpants {
         static void set_cursor_visible(HANDLE handle, bool visible);
         Console &enable_cursor_display(bool visible);
 
+        Console &flush_input_buffer();
+
         /**
         @param x - horizontal pos
         @param y - vertical pos
@@ -79,8 +81,11 @@ namespace underpants {
 
         [[nodiscard]] const HANDLE &get_std_output() const;
 
+        [[nodiscard]] const HANDLE &get_std_input() const;
+
     private:
         HANDLE std_output;
+        HANDLE std_input;
     };
 
     extern Console console;

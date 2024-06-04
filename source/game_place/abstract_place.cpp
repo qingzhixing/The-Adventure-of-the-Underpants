@@ -80,7 +80,7 @@ namespace underpants {
     void AbstractPlace::set_place_changed(bool changed) {
         place_changed = changed;
     }
-    std::shared_ptr<AbstractPlace const> AbstractPlace::get_next_place() const {
+    PlacePtr AbstractPlace::get_next_place() const {
         return next_place;
     }
     void AbstractPlace::set_next_place(const AbstractPlace &place) {
@@ -88,5 +88,8 @@ namespace underpants {
     }
     int AbstractPlace::get_place_id() const {
         return place_id;
+    }
+    const SelectionList &AbstractPlace::get_selection_list() const {
+        return selection_list;
     }
 }// namespace underpants

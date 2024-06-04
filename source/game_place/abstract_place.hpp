@@ -11,6 +11,12 @@
 
 namespace underpants {
 
+    class AbstractPlace;
+
+    typedef std::shared_ptr<AbstractPlace const> PlacePtr;
+
+    typedef std::vector<Selection> SelectionList;
+
     class AbstractPlace {
     public:
         // constructors & destructor
@@ -30,9 +36,11 @@ namespace underpants {
         [[nodiscard]] const std::string &get_description() const;
         void set_description(const std::string &_description);
         void set_next_place(const AbstractPlace &place);
-        [[nodiscard]] std::shared_ptr<AbstractPlace const> get_next_place() const;
+        [[nodiscard]] PlacePtr get_next_place() const;
         void set_place_changed(bool changed);
         [[nodiscard]] int get_place_id() const;
+        [[nodiscard]] const SelectionList &get_selection_list() const;
+
 
     public:
         virtual void enter(const AbstractPlace *last_place) = 0;
@@ -50,9 +58,9 @@ namespace underpants {
         int place_id;
         std::string place_name;
         std::string description;
-        std::vector<Selection> selection_list = {};
+        SelectionList selection_list = {};
         bool place_changed = false;
-        std::shared_ptr<AbstractPlace const> next_place = nullptr;
+        PlacePtr next_place = nullptr;
     };
 
 }// namespace underpants

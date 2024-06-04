@@ -29,6 +29,8 @@ set(SRC_LIST
         source/game_place/selection.hpp
         source/game_place/abstract_place.cpp
         source/game_place/abstract_place.hpp
+        source/game_place/place_extend.cpp
+        source/game_place/place_extend.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)
