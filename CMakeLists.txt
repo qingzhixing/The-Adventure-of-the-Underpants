@@ -31,6 +31,9 @@ set(SRC_LIST
         source/game_place/abstract_place.hpp
         source/game_place/place_extend.cpp
         source/game_place/place_extend.hpp
+        source/game_place/place_manager.cpp
+        source/game_place/place_manager.hpp
+        source/game_place/place_manager.hpp
 )
 aux_source_directory(./source/ SRC_LIST)
 aux_source_directory(./lib/source/ SRC_LIST)
