@@ -48,7 +48,7 @@ namespace underpants {
         return *this;
     }
 
-    void AbstractPlace::goto_place(const AbstractPlace &place) {
+    void AbstractPlace::goto_place(AbstractPlace &place) {
         next_place.reset(&place);
         place_changed = true;
     }
@@ -80,13 +80,16 @@ namespace underpants {
     void AbstractPlace::set_place_changed(bool changed) {
         place_changed = changed;
     }
-    std::shared_ptr<AbstractPlace const> AbstractPlace::get_next_place() const {
+    std::shared_ptr<AbstractPlace> AbstractPlace::get_next_place() {
         return next_place;
     }
-    void AbstractPlace::set_next_place(const AbstractPlace &place) {
+    void AbstractPlace::set_next_place(AbstractPlace &place) {
         next_place.reset(&place);
     }
     int AbstractPlace::get_place_id() const {
         return place_id;
+    }
+    void AbstractPlace::enter(std::shared_ptr<AbstractPlace> last_place) {
+        throw std::logic_error("Unimplemented function AbstractPlace::enter()");
     }
 }// namespace underpants

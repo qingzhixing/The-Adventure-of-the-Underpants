@@ -123,7 +123,7 @@ namespace underpants {
         }
         return true;
     }
-    void Lobby::enter(const AbstractPlace *const last_place) {
+    void Lobby::enter(std::shared_ptr<AbstractPlace> last_place) {
         while (display_input_loop())
             ;
     }

@@ -8,12 +8,12 @@
 #include "abstract_place.hpp"
 namespace underpants {
 
-    class Lobby : AbstractPlace {
+    class Lobby : public AbstractPlace {
     public:
         Lobby();
 
     public:
-        void enter(const AbstractPlace *last_place) override;
+        void enter(std::shared_ptr<AbstractPlace> last_place) override;
 
     private:
         /**

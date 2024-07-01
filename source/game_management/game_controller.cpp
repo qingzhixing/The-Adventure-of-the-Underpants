@@ -6,6 +6,7 @@
 #include "../game_data/game_setting.hpp"
 #include "../game_data/global_data_manager.hpp"
 #include "../game_place/lobby.hpp"
+#include "../game_place/place_manager.hpp"
 #include "../utilities/types.hpp"
 #include "console.hpp"
 
@@ -14,8 +15,7 @@ namespace underpants {
 
     static GameSetting &setting = global.game_setting;
 
-
-    extern Console console;
+    static PlaceManager placeManager;
 
     // 定义，分配空间
     GameController *GameController::instance;
@@ -91,7 +91,15 @@ namespace underpants {
         console.clear_screen();
     }
 
+    inline static void PlaceManagerInit() {
+        auto lobby = Lobby();
+        auto lobbyPtr = std::make_shared<Lobby>(lobby);
+        placeManager = PlaceManager(lobbyPtr);
+    }
+
     void GameController::game_init() {
+
+        PlaceManagerInit();
 
         global.load_game_data();
         player.log_data();
@@ -108,7 +116,7 @@ namespace underpants {
     }
 
     void GameController::game_update() {
-        Lobby().enter(nullptr);
+        placeManager.HandlePlace();
     }
 
     void GameController::game_end() {

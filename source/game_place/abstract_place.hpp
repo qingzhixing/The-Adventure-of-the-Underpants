@@ -29,21 +29,22 @@ namespace underpants {
         [[nodiscard]] bool is_place_changed() const;
         [[nodiscard]] const std::string &get_description() const;
         void set_description(const std::string &_description);
-        void set_next_place(const AbstractPlace &place);
-        [[nodiscard]] std::shared_ptr<AbstractPlace const> get_next_place() const;
+        void set_next_place(AbstractPlace &place);
+        [[nodiscard]] std::shared_ptr<AbstractPlace> get_next_place();
         void set_place_changed(bool changed);
         [[nodiscard]] int get_place_id() const;
 
     public:
-        virtual void enter(const AbstractPlace *last_place) = 0;
+        virtual void enter(std::shared_ptr<AbstractPlace> last_place);
 
+    protected:
         /**
          *
          * @brief 前往下一个地点
          * @param place 下一个地点
          * @note 与PlaceManager通信，基于place_changed改变和get_next_place().
          */
-        void goto_place(const AbstractPlace &place);
+        void goto_place(AbstractPlace &place);
         static int generate_new_place_id();
 
     protected:
@@ -52,7 +53,7 @@ namespace underpants {
         std::string description;
         std::vector<Selection> selection_list = {};
         bool place_changed = false;
-        std::shared_ptr<AbstractPlace const> next_place = nullptr;
+        std::shared_ptr<AbstractPlace> next_place = nullptr;
     };
 
 }// namespace underpants
