@@ -60,10 +60,7 @@ namespace underpants {
 
         // waiting for input
 
-        //        FlushConsoleInputBuffer(console.get_std_output());
-        while (_kbhit()) {
-            _getch();
-        }
+        console.flush_input_buffer();
 
         bool input_success = false;
         bool select_success = false;
@@ -79,27 +76,19 @@ namespace underpants {
 
             const int key_code = _getch();
 
-            logger.flog_msg_debug(
-                    "Lobby::display_input_loop() - key_code: %d\n",
-                    key_code);
-
             if (key_code == 224) {
-                logger.log_msg("Getting next_key_code...\n");
                 const int next_key_code = _getch();
-                logger.flog_msg_debug("next_key_code: %d\n", next_key_code);
 
                 // Right Arrow
                 if (next_key_code == 77) {
                     input_success = true;
                     focus_on_selection++;
-                    logger.flog_msg_debug("Right Arrow Detected.\n");
                 }
 
                 // Left Arrow
                 if (next_key_code == 75) {
                     input_success = true;
                     focus_on_selection--;
-                    logger.flog_msg_debug("Left Arrow Detected.\n");
                 }
             }
 
@@ -108,13 +97,11 @@ namespace underpants {
             if (key_code == 13) {
                 input_success = true;
                 select_success = true;
-                logger.flog_msg_debug("Enter Detected.\n");
             }
 
             focus_on_selection = focus_on_selection < 0 ? int(selection_list.size() - 1) : focus_on_selection;
             focus_on_selection = focus_on_selection >= int(selection_list.size()) ? 0 : focus_on_selection;
 
-            logger.flog_msg_debug("focus_on_selection: %d\n", focus_on_selection);
         }//Lobby::display_input_loop()
 
         if (select_success) {

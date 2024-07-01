@@ -1,6 +1,7 @@
 #include "console.hpp"
 #include "../utilities/debug.hpp"
 #include "../utilities/logger.hpp"
+#include <conio.h>
 #include <string>
 
 namespace underpants {
@@ -8,6 +9,7 @@ namespace underpants {
 
     Console::Console() {
         std_output = GetStdHandle(STD_OUTPUT_HANDLE);
+        std_input = GetStdHandle(STD_INPUT_HANDLE);
         set_console_cur_pos(0, 0);
         enable_cursor_display(false);
     }
@@ -197,6 +199,15 @@ namespace underpants {
     }
     const HANDLE &Console::get_std_output() const {
         return std_output;
+    }
+
+    const HANDLE &Console::get_std_input() const {
+        return std_input;
+    }
+
+    Console &Console::flush_input_buffer() {
+        FlushConsoleInputBuffer(std_input);
+        return *this;
     }
 
 #pragma endregion
