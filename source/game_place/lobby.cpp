@@ -3,8 +3,9 @@
 //
 
 #include "lobby.hpp"
+#include "../game_data/game_info.hpp"
+#include "../game_data/global_data_manager.hpp"
 #include "../game_management/console.hpp"
-#include "../game_management/game_info.hpp"
 #include "../utilities/logger.hpp"
 #include "../utilities/types.hpp"
 #include <conio.h>
@@ -139,8 +140,30 @@ namespace underpants {
             },
             "Exit",
     };
+    static const Selection player_info_selection{
+            "Player Info",
+
+            [](int source_id) -> void {
+                static PlayerData &player = global.player_data;
+                console.clear_screen()
+                        .slow_print("-> Player Info <-", 0, {30, 10}, true, INTENSITY_CYAN)
+                        .slow_print("======== Player Info ========", 0, {30, 12})
+                        .slow_print(std::format("Name: {0}", player.name), 0, {30, 14}, true, MAGENTA)
+                        .slow_print(std::format("Level: {0}", player.level), 0, {30, 15}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Exp: {0}", player.experience), 0, {30, 16}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Blood: {0}/{1}", player.blood, player.max_blood), 0, {30, 17}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Magic: {0}/{1}", player.magic, player.max_magic), 0, {30, 18}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Cleanliness: {0}/{1}", player.cleanliness, player.max_cleanliness), 0, {30, 19}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Attack: {0}", player.attack), 0, {30, 20}, true, INTENSITY_BLUE)
+                        .slow_print(std::format("Defense: {0}", player.defense), 0, {30, 21}, true, INTENSITY_BLUE)
+                        .slow_print("======== End Player Info ========", 0, {30, 23});
+                Sleep(1.5_s);
+            },
+            "Display Player Character Info",
+    };
 
     Lobby::Lobby() : AbstractPlace("Lobby", "Game Start Menu") {
+        selection_list.push_back(player_info_selection);
         selection_list.push_back(game_info_selection);
         selection_list.push_back(exit_selection);
     }

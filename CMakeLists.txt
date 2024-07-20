@@ -23,8 +23,8 @@ set(SRC_LIST
         source/game_management/console.cpp
         source/utilities/string_util.cpp
         source/utilities/string_util.hpp
-        source/game_management/game_info.cpp
-        source/game_management/game_info.hpp
+        source/game_data/game_info.cpp
+        source/game_data/game_info.hpp
         source/game_place/selection.cpp
         source/game_place/selection.hpp
         source/game_place/abstract_place.cpp

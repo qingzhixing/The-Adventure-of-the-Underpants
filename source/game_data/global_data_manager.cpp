@@ -1,7 +1,7 @@
 #include "global_data_manager.hpp"
 #include "../utilities/file_controller.hpp"
 
-#include "../game_management/game_info.hpp"
+#include "game_info.hpp"
 #include "rapidjson/error/en.h"
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"

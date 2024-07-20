@@ -17,3 +17,6 @@
 
 - [x] ⌨️ Keyboard_Selection! 2024/6/3 23:57
   ![Keyboard_Selection](./assets/imgs/Keyboard_Selection.png)
+
+- [x] 🤯Player Info Display! 2024.7.20
+  ![Player_Data_Display](./assets/imgs/Player_Data_Display.png)

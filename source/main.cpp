@@ -1,6 +1,6 @@
 #include "main.hpp"
+#include "game_data/game_info.hpp"
 #include "game_management/game_controller.hpp"
-#include "game_management/game_info.hpp"
 using namespace underpants;
 
 
